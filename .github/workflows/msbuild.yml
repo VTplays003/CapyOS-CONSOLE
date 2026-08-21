@@ -28,6 +28,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - name: check the code
     - uses: actions/checkout@v4
 
     - name: Add MSBuild to PATH
@@ -36,6 +37,11 @@ jobs:
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+
+     - name: Install Boost via vcpkg
+      run: |
+        vcpkg install boost:x64-windows
+        vcpkg integrate install
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
