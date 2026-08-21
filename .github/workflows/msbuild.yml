@@ -26,10 +26,10 @@ jobs:
 
       - name: Restore NuGet packages
         run: nuget restore ${{ env.SOLUTION_FILE_PATH }}
-
+###beast is just a placeholder because I dont want to download the entire boost library
       - name: Install Boost via vcpkg
         run: |
-          vcpkg install boost:x64-windows
+          vcpkg install boost-beast:x64-windows
           vcpkg integrate install
 
       - name: Build
