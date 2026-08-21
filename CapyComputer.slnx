@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="CapyComputer.vcxproj" Id="baba9b19-10a9-46df-a28a-6890d1558605" />
+</Solution>
