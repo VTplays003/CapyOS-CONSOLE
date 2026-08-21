@@ -1,6 +1,5 @@
 //boost includes
 #include <boost/version.hpp>
-
 //regular includes
 #include <iostream>
 #include <string>
@@ -30,9 +29,6 @@ struct Task
 std::vector<Task> tasks;
 
 
-//im considering making the player have it's own header file, because im adding a inventory system.
-//i feel like this code is INSANELY unoptimized, especially with the enums and the structs, no its actually the progression system
-//im also struggling with the save/load system
 static void CPPLingo()
 {
 	Player player;

@@ -364,7 +364,7 @@ public:
 		int strength = 1;
 		int defense = 1;
 	};
-	std::unique_ptr<Enemy> currentEnemy = nullptr;
+	Enemy* currentEnemy = nullptr;
 
 	CombatSystem()
 	{
@@ -389,6 +389,10 @@ public:
 	void enemyTurn()
 	{
 
+	}
+	const std::unordered_map<std::string, Enemy> GetEnemies()
+	{
+		return enemyDatabase;
 	}
 private:
 	bool inCombat = false;
@@ -421,9 +425,9 @@ public:
 		std::cout << "Available Classes:" << "\n";
 		for (const auto& pair : classList)
 		{
-			std::cout << " - " << pair.second.name << ": " << pair.second.description << " (Level " << pair.second.levelRequirement << ")" << "\n";
+			std::cout << " - " << pair.second.name << ": " << pair.second.description << " (Level " << pair.second.levelRequirement << pair.second.ID << ")" << "\n";
 		}
-		std::cout << "Select a class to enroll in by typing the class number." << "\n"; 
+		std::cout << "Select a class to enroll in by typing the class ID." << "\n"; 
 		std::getline(std::cin, addedClass);
 		int classID = std::stoi(addedClass);
 		auto finder = classesAvailible.find(classID);
@@ -437,13 +441,15 @@ public:
 		}
 		
 	}
-	void attendClass(const std::vector<AcademyClass>& enrolledClasses)
+	void attendClass(const std::vector<AcademyClass>& enrolledClasses, CombatSystem& combatSys)
 	{
 		for (const auto& classes : enrolledClasses)
 		{
 			if (classes.ID == 1001)
 			{
-
+				std::cout << "Today you will learn how to fight enemies." << "\n";
+				auto enemies = combatSys.GetEnemies();
+				combatSys.currentEnemy = &enemies["TestDummy"];
 			}
 		}
 	}
