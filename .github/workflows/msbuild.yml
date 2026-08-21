@@ -7,7 +7,7 @@ on:
     branches: ["capy_main"]
 
 env:
-  SOLUTION_FILE_PATH: CapyOS-CONSOLE.slnx
+  SOLUTION_FILE_PATH: CapyComputer.slnx
   BUILD_CONFIGURATION: Release
 
 permissions:
