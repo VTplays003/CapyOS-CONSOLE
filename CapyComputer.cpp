@@ -525,7 +525,7 @@ int main()
 	//i had to manually do this because the capy command on Capyshell kept printing some ancient language.
 	SetConsoleOutputCP(CP_UTF8);
 	std::cout << "Hello and welcome to the CapyComputer Installation Client!" << "\n";
-	std::cout << "This runs on Boost version " << BOOST_VERSION << " and also MVSC C++23" << "\n";
+	std::cout << "This runs on Boost version " << BOOST_VERSION << " and also MVSC C++23 with Git for Windows installed." << "\n";
 	std::cout << "Redirecting to the CapyComputer Installation Client..." << "\n";
 	installCapyComputer();
 	return 0;
