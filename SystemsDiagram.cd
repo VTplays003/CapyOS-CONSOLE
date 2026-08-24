@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Player">
+    <Position X="7.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAhEAAAgAAAAAEAABCgAAAAAFEABAEAAAAAMgCAAA=</HashCode>
+      <FileName>CPPLingo_Player.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="race" />
+      <Field Name="gender" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Inventory">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <AssociationLine Name="itemDatabase" Type="std::unordered_map&lt;_Kty, _Ty, _Hasher, _Keyeq, _Alloc&gt;">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.365" Y="0.052" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="inventoryObj" Type="std::vector&lt;_Ty, _Alloc&gt;">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.16" Y="0.068" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>BEAAACAAgAAAAAAAAACAAABAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>CPPLingo_Player.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="itemDatabase" />
+      <Field Name="inventoryObj" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="LingoManual">
+    <Position X="3.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAIAAAAAAAIAAAAABAAAAAAAAAAAAAAAAAIAAAEAAAI=</HashCode>
+      <FileName>CPPLingo_Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SaveSystem">
+    <Position X="12" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>CPPLingo_Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CombatSystem">
+    <Position X="1.25" Y="5" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="CombatSystem::Enemy" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CPPLingo_Player.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <AssociationLine Name="enemyDatabase" Type="std::unordered_map&lt;_Kty, _Ty, _Hasher, _Keyeq, _Alloc&gt;">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.018" Y="0.035" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AABAABAAAAAABAAAAEAAAAAgAAEAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>CPPLingo_Player.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="enemyDatabase" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AcademySystem">
+    <Position X="1.25" Y="8" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="AcademySystem::AcademyClass" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CPPLingo_Player.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAEAAAEAAAAAAAIAgEAAIAAAAAAAAAAA=</HashCode>
+      <FileName>CPPLingo_Player.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="classesAvailible" />
+      <Field Name="classesEnrolled" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="std::unordered_map&lt;_Kty, _Ty, _Hasher, _Keyeq, _Alloc&gt;">
+    <Position X="13.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BABAAAAAAABAAACQAAAAAAAAAAEABAAAgQAgAAAEAAA=</HashCode>
+      <FileName>C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\unordered_map</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="std::vector&lt;_Ty, _Alloc&gt;">
+    <Position X="10.5" Y="0.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="std::vector&lt;_Ty, _Alloc&gt;::_Asan_extend_guard" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\vector</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="std::vector&lt;_Ty, _Alloc&gt;::_Asan_create_guard" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\vector</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Struct Name="std::vector&lt;_Ty, _Alloc&gt;::_Reallocation_guard2" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\vector</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="std::vector&lt;_Ty, _Alloc&gt;::_Vaporization_guard" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\vector</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Enum Name="std::vector&lt;_Ty, _Alloc&gt;::_Reallocation_policy" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\vector</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>A2AAEYEiAbLsCEBAAONYMAkWM0UARBIggQkwghAFQko=</HashCode>
+      <FileName>C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\vector</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_Mypair" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="std::_Compressed_pair&lt;_Ty1, _Ty2&gt;">
+    <Position X="7.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAA=</HashCode>
+      <FileName>C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xmemory</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="std::map&lt;_Kty, _Ty, _Pr, _Alloc&gt;">
+    <Position X="7.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAABAAACwAAAAAAAAAAEBBAABgQAgAAAAAAA=</HashCode>
+      <FileName>C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\map</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Item">
+    <Position X="1.25" Y="2.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Item::ItemType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CPPLingo_Player.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Struct Name="Item::ItemStats" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CPPLingo_Player.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAIAAAAAAAAAAFAACAAAAAAAAAAAA=</HashCode>
+      <FileName>CPPLingo_Player.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="PlayerProgression">
+    <Position X="5.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAA4AAAEAAgAAAACAAAAAAI=</HashCode>
+      <FileName>CPPLingo_Player.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="Race">
+    <Position X="3.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABIAAAAAAAAAAAAAAAAAAAAAAAAABAAAAIAAAQABA=</HashCode>
+      <FileName>CPPLingo_Player.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Gender">
+    <Position X="4.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAABA=</HashCode>
+      <FileName>CPPLingo_Player.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Arial" Size="11" />
+</ClassDiagram>

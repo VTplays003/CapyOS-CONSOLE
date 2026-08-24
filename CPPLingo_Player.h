@@ -422,24 +422,33 @@ public:
 
 	void addClass(const std::map<int, AcademyClass>& classList)
 	{
-		std::cout << "Available Classes:" << "\n";
-		for (const auto& pair : classList)
+		bool addClass = true;
+		while (addClass)
 		{
-			std::cout << " - " << pair.second.name << ": " << pair.second.description << " (Level " << pair.second.levelRequirement << pair.second.ID << ")" << "\n";
+			std::cout << "Available Classes:" << "\n";
+			for (const auto& pair : classList)
+			{
+				std::cout << " - " << pair.second.name << ": " << pair.second.description << " (Level " << pair.second.levelRequirement << pair.second.ID << ")" << "\n";
+			}
+			std::cout << "Select a class to enroll in by typing the class ID." << "\n";
+			std::cout << "You can also exit this process by typing 'quit' or 'q'." << "\n";
+			std::getline(std::cin, addedClass);
+			if (addedClass == "quit" || addedClass == "q")
+			{
+				addClass = false;
+				break;
+			}
+			int classID = std::stoi(addedClass);
+			auto finder = classesAvailible.find(classID);
+			if (finder != classesAvailible.end())
+			{
+				classesEnrolled.push_back(finder->second);
+			}
+			else
+			{
+				throw std::runtime_error("Item not found in database.");
+			}
 		}
-		std::cout << "Select a class to enroll in by typing the class ID." << "\n"; 
-		std::getline(std::cin, addedClass);
-		int classID = std::stoi(addedClass);
-		auto finder = classesAvailible.find(classID);
-		if (finder != classesAvailible.end())
-		{
-			classesEnrolled.push_back(finder->second);
-		}
-		else
-		{
-			throw std::runtime_error("Item not found in database.");
-		}
-		
 	}
 	void attendClass(const std::vector<AcademyClass>& enrolledClasses, CombatSystem& combatSys)
 	{

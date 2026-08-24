@@ -263,7 +263,7 @@ static void CPPLingo()
 	std::cout << "You go to the academy clerk and register for your classes" << "\n";
 	auto classDatabase = academySystem.AccessClasses();
 	academySystem.addClass(classDatabase);
-
+	std::cout << "The bell rings and you attend your class" << "\n";
 }
 
 static void CapyShell()
