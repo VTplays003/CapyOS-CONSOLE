@@ -1,5 +1,6 @@
 //boost includes
 #include <boost/version.hpp>
+#include <boost/beast.hpp>
 //regular includes
 #include <iostream>
 #include <string>
@@ -16,7 +17,7 @@
 #include <memory>
 #include "CPPLingo_Player.h"
 //THIS IS A SOURCE FILE. PLEASE DO NOT USE IT AS A HEADER.
-//the reason i dont use using namespace std; is because I want to learn to tolerate std::
+//the reason i dont use using namespace std; is because I want to learn to tolerate std:: and its only an extra 5 characters to type :)
 //variables (global)
 struct Task
 {
@@ -262,8 +263,9 @@ static void CPPLingo()
 	std::cout << "You wake up for your first time in the guild academy." << "\n";
 	std::cout << "You go to the academy clerk and register for your classes" << "\n";
 	auto classDatabase = academySystem.AccessClasses();
-	academySystem.addClass(classDatabase);
+	academySystem.addClass(classDatabase, player);
 	std::cout << "The bell rings and you attend your class" << "\n";
+	academySystem.attendClass(academySystem.AccessEnrolled(), combatSystem);
 }
 
 static void CapyShell()

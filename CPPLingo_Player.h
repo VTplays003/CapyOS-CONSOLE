@@ -420,7 +420,12 @@ public:
 		return classesAvailible;
 	}
 
-	void addClass(const std::map<int, AcademyClass>& classList)
+	std::vector<AcademyClass> AccessEnrolled()
+	{
+		return classesEnrolled;
+	}
+
+	void addClass(const std::map<int, AcademyClass>& classList, Player& playerObj)
 	{
 		bool addClass = true;
 		while (addClass)
@@ -442,11 +447,18 @@ public:
 			auto finder = classesAvailible.find(classID);
 			if (finder != classesAvailible.end())
 			{
-				classesEnrolled.push_back(finder->second);
+				if (playerObj.level >= finder->second.levelRequirement)
+				{
+					classesEnrolled.push_back(finder->second);
+				}
+				else
+				{
+					std::cout << "Your level is too low!" << "\n";
+				}
 			}
 			else
 			{
-				throw std::runtime_error("Item not found in database.");
+				std::cout << "No class with ID of " << classID << "\n";
 			}
 		}
 	}
