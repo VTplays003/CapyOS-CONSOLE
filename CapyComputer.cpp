@@ -265,7 +265,7 @@ static void CPPLingo()
 	auto classDatabase = academySystem.AccessClasses();
 	academySystem.addClass(classDatabase, player);
 	std::cout << "The bell rings and you attend your class" << "\n";
-	academySystem.attendClass(academySystem.AccessEnrolled(), combatSystem);
+	academySystem.attendClass(academySystem.AccessEnrolled(), combatSystem, player);
 }
 
 static void CapyShell()
@@ -446,7 +446,7 @@ static void CapybaraSystemsOS()
 	int waitTime = 30;
 	while (true)
 	{
-		std::cout << "Welcome to CapybaraSystemsOS - v0.1!" << "\n";
+		std::cout << "Welcome to CapybaraSystemsOS - v0.2!" << "\n";
 		for (int i = 0; i < 36; i++)
 		{
 			std::cout << "-";

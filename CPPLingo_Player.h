@@ -34,6 +34,7 @@ public:
 	std::string respawnPos;
 	Gender gender = Gender::Unknown;
 	Race race = Race::undefined;
+	int health = 100;
 	int level = 1;
 	int XP = 0;
 	bool characterVerifcation = false;
@@ -371,7 +372,7 @@ public:
 		enemyDatabase["TestDummy"] = { "Test Dummy", 0, 100, 0, 0 };
 	}
 
-	void startCombat()
+	void startCombat(const Player& playerObj)
 	{
 		if (!(currentEnemy == nullptr))
 		{
@@ -380,15 +381,37 @@ public:
 		else
 		{
 			inCombat = false;
+			std::cout << "No enemy detected." << "\n";
+			return;
+		}
+		std::cout << "A battle has started between " << playerObj.name << " and " << currentEnemy->name << "\n";
+		while (inCombat)
+		{
+			playerTurn();
+			enemyTurn();
+			if (playerObj.health <= 0)
+			{
+				std::cout << "Combat has ended.";
+				std::cout << "You fainted and had to be taken to your respawn point" << "\n";
+				inCombat = false;
+				break;
+			}
+			else if (currentEnemy->health <= 0)
+			{
+				std::cout << "Combat has ended.";
+				std::cout << "The enemy falls in defeat and you get some stuff." << "\n";
+				inCombat = false;
+				break;
+			}
 		}
 	}
 	void playerTurn()
 	{
-
+		return;
 	}
 	void enemyTurn()
 	{
-
+		return;
 	}
 	const std::unordered_map<std::string, Enemy> GetEnemies()
 	{
@@ -411,8 +434,8 @@ public:
 	};
 	AcademySystem()
 	{
-		classesAvailible[1] = { "Beginner Combat Class", "A class for beginners to learn basic combat skills.", 1, 1001};
-		classesAvailible[2] = { "Beginner C++ Class", "A class for beginners to learn basic C++ programming. Teaches you all the way until page 10 of the manual.", 1, 2001};
+		classesAvailible[1001] = { "Beginner Combat Class", "A class for beginners to learn basic combat skills.", 1, 1001};
+		classesAvailible[2001] = { "Beginner C++ Class", "A class for beginners to learn basic C++ programming. Teaches you all the way until page 10 of the manual.", 1, 2001};
 	}
 
 	std::map<int, AcademyClass> AccessClasses()
@@ -433,7 +456,7 @@ public:
 			std::cout << "Available Classes:" << "\n";
 			for (const auto& pair : classList)
 			{
-				std::cout << " - " << pair.second.name << ": " << pair.second.description << " (Level " << pair.second.levelRequirement << pair.second.ID << ")" << "\n";
+				std::cout << " - " << pair.second.name << ": " << pair.second.description << " (Level " << pair.second.levelRequirement << ") ID:" << pair.second.ID << "\n";
 			}
 			std::cout << "Select a class to enroll in by typing the class ID." << "\n";
 			std::cout << "You can also exit this process by typing 'quit' or 'q'." << "\n";
@@ -443,6 +466,7 @@ public:
 				addClass = false;
 				break;
 			}
+			//while in my debugging I found out that .find() looks for the key of the value so instead of using chatgpt i changed the key
 			int classID = std::stoi(addedClass);
 			auto finder = classesAvailible.find(classID);
 			if (finder != classesAvailible.end())
@@ -462,7 +486,7 @@ public:
 			}
 		}
 	}
-	void attendClass(const std::vector<AcademyClass>& enrolledClasses, CombatSystem& combatSys)
+	void attendClass(const std::vector<AcademyClass>& enrolledClasses, CombatSystem& combatSys, Player& playerObj)
 	{
 		for (const auto& classes : enrolledClasses)
 		{
@@ -471,6 +495,7 @@ public:
 				std::cout << "Today you will learn how to fight enemies." << "\n";
 				auto enemies = combatSys.GetEnemies();
 				combatSys.currentEnemy = &enemies["TestDummy"];
+				combatSys.startCombat(playerObj);
 			}
 		}
 	}
