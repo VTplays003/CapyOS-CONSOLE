@@ -144,16 +144,23 @@ static void CPPLingo()
 			std::cout << "You should probably interact with the box." << "\n";
 		}
 	}
-	std::cout << "The gate opens, and you enter the kingdom" << "\n";
-	std::cout << "Prologue - Act 2" << "\n";
-	std::cout << "You have arrived at the City Center" << "\n";
-	std::cout << "Now would probably be a good time to: " << "\n";
-	std::cout << "1. Get supplies" << "\n"; 
-	std::cout << "2. Sign up in the Guild" << "\n";
-	std::cout << "3. Finding somewhere to live." << "\n";
-	std::cout << "Perferably, you should start with 2 and 3. But it's up to you." << "\n";
-	std::cout << "(You can use the choice number or the name)" << "\n";
-	std::cout << "So, what will it be?" << "\n";
+	if (progression.prologue1_2)
+	{
+		std::cout << "Prologue Act 2 skipped due to SaveFile.Progression.Prologue1_2. (Result: True)" << "\n";
+	}
+	else
+	{
+		std::cout << "The gate opens, and you enter the kingdom" << "\n";
+		std::cout << "Prologue - Act 2" << "\n";
+		std::cout << "You have arrived at the City Center" << "\n";
+		std::cout << "Now would probably be a good time to: " << "\n";
+		std::cout << "1. Get supplies" << "\n";
+		std::cout << "2. Sign up in the Guild" << "\n";
+		std::cout << "3. Finding somewhere to live." << "\n";
+		std::cout << "Perferably, you should start with 2 and 3. But it's up to you." << "\n";
+		std::cout << "(You can use the choice number or the name)" << "\n";
+		std::cout << "So, what will it be?" << "\n";
+	}
 	while (!progression.prologue1_2)
 	{
 		std::cout << "You have completed: " << "\n" 

@@ -37,6 +37,8 @@ public:
 	int health = 100;
 	int level = 1;
 	int XP = 0;
+	int stregnth = 1;
+	int defense = 1;
 	bool characterVerifcation = false;
 	bool hasGuildCard = false;
 	//soon to be optimization stuff
@@ -372,7 +374,7 @@ public:
 		enemyDatabase["TestDummy"] = { "Test Dummy", 0, 100, 0, 0 };
 	}
 
-	void startCombat(const Player& playerObj)
+	void startCombat(Player& playerObj)
 	{
 		if (!(currentEnemy == nullptr))
 		{
@@ -387,8 +389,9 @@ public:
 		std::cout << "A battle has started between " << playerObj.name << " and " << currentEnemy->name << "\n";
 		while (inCombat)
 		{
-			playerTurn();
-			enemyTurn();
+			std::cout << "It is now your turn." << "\n";
+			playerTurn(playerObj);
+			enemyTurn(playerObj);
 			if (playerObj.health <= 0)
 			{
 				std::cout << "Combat has ended.";
@@ -405,11 +408,23 @@ public:
 			}
 		}
 	}
-	void playerTurn()
+	void playerTurn(Player& playerObj)
 	{
+		std::cout << "Choose a option. (Number or name)" << "\n";
+		std::cout << "1. Attack" << "\n";
+		std::cout << "2. Check enemy" << "\n";
+		std::cout << "3. Guard" << "\n";
+		std::cout << "4. Use item" << "\n";
+		std::getline(std::cin, playerObj.action);
+		if (playerObj.action == "Attack" || playerObj.action == "1")
+		{
+			currentEnemy->health -= playerObj.stregnth / currentEnemy->defense;
+			std::cout << "The enemy now has: " << currentEnemy->health << "HP" << "\n";
+
+		}
 		return;
 	}
-	void enemyTurn()
+	void enemyTurn(Player& playerObj)
 	{
 		return;
 	}
@@ -473,6 +488,7 @@ public:
 			{
 				if (playerObj.level >= finder->second.levelRequirement)
 				{
+					std::cout << "Added class: " << finder->second.name << "\n";
 					classesEnrolled.push_back(finder->second);
 				}
 				else
@@ -496,6 +512,10 @@ public:
 				auto enemies = combatSys.GetEnemies();
 				combatSys.currentEnemy = &enemies["TestDummy"];
 				combatSys.startCombat(playerObj);
+			}
+			else if (classes.ID == 2001)
+			{
+
 			}
 		}
 	}
