@@ -39,6 +39,7 @@ public:
 	int XP = 0;
 	int stregnth = 1;
 	int defense = 1;
+	bool guarded = false;
 	bool characterVerifcation = false;
 	bool hasGuildCard = false;
 	//soon to be optimization stuff
@@ -371,7 +372,7 @@ public:
 
 	CombatSystem()
 	{
-		enemyDatabase["TestDummy"] = { "Test Dummy", 0, 100, 0, 0 };
+		enemyDatabase["TestDummy"] = { "Test Dummy", 1, 100, 0, 1 };
 	}
 
 	void startCombat(Player& playerObj)
@@ -418,11 +419,41 @@ public:
 		std::getline(std::cin, playerObj.action);
 		if (playerObj.action == "Attack" || playerObj.action == "1")
 		{
+			if (currentEnemy->defense == 0)
+			{
+				throw std::runtime_error("Tried to divide by zero on CombatSystem.Player.Attack. The enemy's defense is 0.");
+			}
 			currentEnemy->health -= playerObj.stregnth / currentEnemy->defense;
 			std::cout << "The enemy now has: " << currentEnemy->health << "HP" << "\n";
 
 		}
+		else if (playerObj.action == "Check enemy" || playerObj.action == "2")
+		{
+			std::cout << "You have checked the enemy." << "\n";
+			std::cout << "The enemy's name is: " << currentEnemy->name << "\n";
+			std::cout << "The enemy's level is: " << currentEnemy->level << "\n"; 
+			std::cout << "The enemy's health is: " << currentEnemy->health << "\n";
+			std::cout << "The enemy's strength is: " << currentEnemy->strength << "\n";
+			std::cout << "The enemy's defense is: " << currentEnemy->defense << "\n";
+		}
+		else if (playerObj.action == "Guard" || playerObj.action == "3")
+		{
+			std::cout << "You have guarded." << "\n";
+			playerObj.defense += 1;
+			playerObj.guarded = true;
+		}
+		else if (playerObj.action == "Use item" || playerObj.action == "4")
+		{
+			std::cout << "You have used an item." << "\n";
+			//placeholder
+		}
+		else
+		{
+			std::cout << "Invalid action. Please try again." << "\n";
+			playerTurn(playerObj);
+		}
 		return;
+		
 	}
 	void enemyTurn(Player& playerObj)
 	{
