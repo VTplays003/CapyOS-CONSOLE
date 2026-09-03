@@ -457,7 +457,26 @@ public:
 	}
 	void enemyTurn(Player& playerObj)
 	{
-		return;
+		std::random_device rd;
+		std::mt19937 rng(rd());
+		std::uniform_int_distribution<int> distribution(1, 3);
+		int roll = distribution(rng);
+		if (roll <= 1)
+		{
+			std::cout << "The enemy attacks!" << "\n";
+			playerObj.health -= currentEnemy->strength / playerObj.defense;
+			std::cout << "You now have: " << playerObj.health << "HP" << "\n";
+		}
+		else if (roll <= 2)
+		{
+			std::cout << "The enemy guards!" << "\n";
+			currentEnemy->defense += 1;
+		}
+		else if (roll <= 3)
+		{
+			//didnt have a good idea what to put here ig soooooooo
+			std::cout << "The enemy heals itself I guess" << "\n";
+		}
 	}
 	const std::unordered_map<std::string, Enemy> GetEnemies()
 	{
