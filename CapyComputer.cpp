@@ -272,7 +272,9 @@ static void CPPLingo()
 	auto classDatabase = academySystem.AccessClasses();
 	academySystem.addClass(classDatabase, player);
 	std::cout << "The bell rings and you attend your class" << "\n";
-	academySystem.attendClass(academySystem.AccessEnrolled(), combatSystem, player);
+	academySystem.attendClass(academySystem.AccessEnrolled(), combatSystem, player, CPPmanual);
+	std::cout << "You now know some basics of C++ and how to fight." << "\n";
+	std::cout << "It's time to go to the guild for some quests" << "\n";
 }
 
 static void CapyShell()

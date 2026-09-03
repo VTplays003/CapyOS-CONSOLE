@@ -367,12 +367,14 @@ public:
 		int health = 100;
 		int strength = 1;
 		int defense = 1;
+		bool guarded = false;
+		int guardedTurns = 0;
 	};
 	Enemy* currentEnemy = nullptr;
 
 	CombatSystem()
 	{
-		enemyDatabase["TestDummy"] = { "Test Dummy", 1, 100, 0, 1 };
+		enemyDatabase["TestDummy"] = { "Test Dummy", 1, 10, 0, 1, false, 0};
 	}
 
 	void startCombat(Player& playerObj)
@@ -402,12 +404,28 @@ public:
 			}
 			else if (currentEnemy->health <= 0)
 			{
-				std::cout << "Combat has ended.";
+				std::cout << "Combat has ended." << "\n";
 				std::cout << "The enemy falls in defeat and you get some stuff." << "\n";
 				inCombat = false;
 				break;
 			}
+			if (playerObj.guarded)
+			{
+				playerObj.defense -= 1;
+				playerObj.guarded = false;
+			}
+			else if (currentEnemy->guarded == true && currentEnemy->guardedTurns >= 1)
+			{
+				currentEnemy->defense -= 1;
+				currentEnemy->guarded = false;
+				currentEnemy->guardedTurns = 0;
+			}
+			else
+			{
+				currentEnemy->guardedTurns++;
+			}
 		}
+		return;
 	}
 	void playerTurn(Player& playerObj)
 	{
@@ -421,7 +439,7 @@ public:
 		{
 			if (currentEnemy->defense == 0)
 			{
-				throw std::runtime_error("Tried to divide by zero on CombatSystem.Player.Attack. The enemy's defense is 0.");
+				throw std::runtime_error("Tried to divide by zero on CombatSystem.PlayerTurn.Attack. The enemy's defense is 0.");
 			}
 			currentEnemy->health -= playerObj.stregnth / currentEnemy->defense;
 			std::cout << "The enemy now has: " << currentEnemy->health << "HP" << "\n";
@@ -436,11 +454,15 @@ public:
 			std::cout << "The enemy's strength is: " << currentEnemy->strength << "\n";
 			std::cout << "The enemy's defense is: " << currentEnemy->defense << "\n";
 		}
-		else if (playerObj.action == "Guard" || playerObj.action == "3")
+		else if (playerObj.action == "Guard" || playerObj.action == "3" && !playerObj.guarded)
 		{
 			std::cout << "You have guarded." << "\n";
 			playerObj.defense += 1;
 			playerObj.guarded = true;
+		}
+		else if (playerObj.action == "Guard" || playerObj.action == "3" && playerObj.guarded)
+		{
+			std::cout << "You are already guarding." << "\n";
 		}
 		else if (playerObj.action == "Use item" || playerObj.action == "4")
 		{
@@ -470,6 +492,7 @@ public:
 		else if (roll <= 2)
 		{
 			std::cout << "The enemy guards!" << "\n";
+			currentEnemy->guarded = true;
 			currentEnemy->defense += 1;
 		}
 		else if (roll <= 3)
@@ -477,6 +500,10 @@ public:
 			//didnt have a good idea what to put here ig soooooooo
 			std::cout << "The enemy heals itself I guess" << "\n";
 			currentEnemy->health += currentEnemy->health / 10;
+		}
+		else
+		{
+			std::cout << "enemy taunts you i guess" << "\n"; 
 		}
 	}
 	const std::unordered_map<std::string, Enemy> GetEnemies()
@@ -553,7 +580,7 @@ public:
 			}
 		}
 	}
-	void attendClass(const std::vector<AcademyClass>& enrolledClasses, CombatSystem& combatSys, Player& playerObj)
+	void attendClass(const std::vector<AcademyClass>& enrolledClasses, CombatSystem& combatSys, Player& playerObj, LingoManual& lingoManual)
 	{
 		for (const auto& classes : enrolledClasses)
 		{
@@ -566,9 +593,10 @@ public:
 			}
 			else if (classes.ID == 2001)
 			{
-
+				std::cout << "place holder for C++ class" << "\n";
 			}
 		}
+		return;
 	}
 private:
 	std::map<int, AcademyClass> classesAvailible;
