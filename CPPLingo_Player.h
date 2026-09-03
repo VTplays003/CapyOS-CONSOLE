@@ -476,6 +476,7 @@ public:
 		{
 			//didnt have a good idea what to put here ig soooooooo
 			std::cout << "The enemy heals itself I guess" << "\n";
+			currentEnemy->health += currentEnemy->health / 10;
 		}
 	}
 	const std::unordered_map<std::string, Enemy> GetEnemies()
