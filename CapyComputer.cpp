@@ -29,7 +29,12 @@ struct Task
 };
 std::vector<Task> tasks;
 
+[-Current Development-]
+static void CapyManager()
+{
 
+}
+[ - Temporary Pause - ]
 static void CPPLingo()
 {
 	Player player;
@@ -276,7 +281,7 @@ static void CPPLingo()
 	std::cout << "You now know some basics of C++ and how to fight." << "\n";
 	std::cout << "It's time to go to the guild for some quests" << "\n";
 }
-
+[-Memory Overhaul Planned-]
 static void CapyShell()
 {
 	//memory commands are in the works
@@ -328,7 +333,7 @@ static void CapyShell()
 		}
 	}
 }
-
+[-Finished-]
 static void TaskApp()
 {
 	std::cout << "Welcome to the Task App!" << "\n";
@@ -466,6 +471,7 @@ static void CapybaraSystemsOS()
 		std::cout << "1. Task App" << "\n";
 		std::cout << "2. Capyshell" << "\n";
 		std::cout << "3. C++ Lingo" << "\n";
+		std::cout << "4. CapyManager" << "\n";
 		std::cout << "Select an app. (Type App Number or App Name)" << "\n";
 		std::getline(std::cin, openedApp);
 		if (openedApp == "1" || openedApp == "Task App")
@@ -479,6 +485,10 @@ static void CapybaraSystemsOS()
 		else if (openedApp == "3" || openedApp == "C++ Lingo")
 		{
 			CPPLingo();
+		}
+		else if (openedApp == "4" || openedApp == "CapyManager")
+		{
+			CapyManager();
 		}
 		else
 		{

@@ -593,7 +593,8 @@ public:
 			}
 			else if (classes.ID == 2001)
 			{
-				std::cout << "place holder for C++ class" << "\n";
+				std::cout << "You learn a new page as you study" << "\n";
+				std::cout << "pretend this does something" << "\n";
 			}
 		}
 		return;
