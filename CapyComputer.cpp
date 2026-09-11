@@ -28,13 +28,12 @@ struct Task
 	bool completed;
 };
 std::vector<Task> tasks;
-
-[-Current Development-]
+//Current Development
 static void CapyManager()
 {
 
 }
-[ - Temporary Pause - ]
+//Temporary Holdoff
 static void CPPLingo()
 {
 	Player player;
@@ -281,7 +280,7 @@ static void CPPLingo()
 	std::cout << "You now know some basics of C++ and how to fight." << "\n";
 	std::cout << "It's time to go to the guild for some quests" << "\n";
 }
-[-Memory Overhaul Planned-]
+//Memory Overhaul Soon
 static void CapyShell()
 {
 	//memory commands are in the works
@@ -333,7 +332,7 @@ static void CapyShell()
 		}
 	}
 }
-[-Finished-]
+//Done
 static void TaskApp()
 {
 	std::cout << "Welcome to the Task App!" << "\n";
