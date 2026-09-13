@@ -31,7 +31,7 @@ std::vector<Task> tasks;
 //Current Development
 static void CapyManager()
 {
-
+	//if this is here a-shell works 
 }
 //Temporary Holdoff
 static void CPPLingo()
