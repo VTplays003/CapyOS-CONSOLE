@@ -84,7 +84,7 @@ static void CPPLingo()
 		std::cout << "Race: " << player.RaceToString(player) << "\n";
 		std::cout << "Gender: " << player.GenderToString(player) << "\n";
 		std::getline(std::cin, player.characterComfirmation);
-		if (player.characterComfirmation == "Yes" || player.characterComfirmation == "Y" || player.characterComfirmation == "y" || player.characterComfirmation == "yes" && player.gender != Gender::Unknown && player.race != Race::undefined)
+		if ((player.characterComfirmation == "Yes" || player.characterComfirmation == "Y" || player.characterComfirmation == "y" || player.characterComfirmation == "yes") && player.gender != Gender::Unknown && player.race != Race::undefined)
 		{
 			std::cout << "Character creation complete!" << "\n";
 			SaveSystem.SaveGame(player, progression, inventory.getInventory());
