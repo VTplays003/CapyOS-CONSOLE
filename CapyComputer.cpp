@@ -51,6 +51,8 @@ static void CPPLingo()
 	if (!testfile)
 	{
 		assert(false);
+		std::cout << "Test failed. Please check system stability." << "/n";
+		return;
 	}
 	std::cout << "Test success!" << "\n";
 	testfile << "you suck at coding you capybara" << "\n";
