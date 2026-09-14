@@ -15,6 +15,7 @@
 #include <unordered_map>
 #include <map>
 #include <memory>
+#include <cassert>
 #include "CPPLingo_Player.h"
 //THIS IS A SOURCE FILE. PLEASE DO NOT USE IT AS A HEADER.
 //the reason i dont use using namespace std; is because I want to learn to tolerate std:: and its only an extra 5 characters to type :)
@@ -33,7 +34,7 @@ static void CapyManager()
 {
 	//if this is here a-shell works 
 }
-//Temporary Holdoff
+//Fixing bugs...
 static void CPPLingo()
 {
 	Player player;
@@ -49,7 +50,7 @@ static void CPPLingo()
 	std::cout << "Testing save file..." << "\n";
 	if (!testfile)
 	{
-		std::cout << "Oh noes! The save file system doesn't work! Try resetting it." << "\n";
+		assert(false);
 	}
 	std::cout << "Test success!" << "\n";
 	testfile << "you suck at coding you capybara" << "\n";
