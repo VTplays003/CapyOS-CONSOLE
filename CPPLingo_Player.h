@@ -407,6 +407,7 @@ public:
 				std::cout << "Combat has ended." << "\n";
 				std::cout << "The enemy falls in defeat and you get some stuff." << "\n";
 				inCombat = false;
+				currentEnemy = nullptr;
 				break;
 			}
 			if (playerObj.guarded)
