@@ -506,7 +506,7 @@ public:
 			std::cout << "enemy taunts you i guess" << "\n"; 
 		}
 	}
-	const std::unordered_map<std::string, Enemy> GetEnemies()
+	const std::unordered_map<std::string, Enemy>& GetEnemies()
 	{
 		return enemyDatabase;
 	}
