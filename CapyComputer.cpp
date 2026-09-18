@@ -16,19 +16,10 @@
 #include <map>
 #include <memory>
 #include <cassert>
+#include <iomanip>
 #include "CPPLingo_Player.h"
 //THIS IS A SOURCE FILE. PLEASE DO NOT USE IT AS A HEADER.
 //the reason i dont use using namespace std; is because I want to learn to tolerate std:: and its only an extra 5 characters to type :)
-//variables (global)
-struct Task
-{
-	std::string title;
-	std::string description;
-	std::chrono::system_clock::time_point date;
-	int priority;
-	bool completed;
-};
-std::vector<Task> tasks;
 //Current Development
 static void CapyManager()
 {
@@ -335,9 +326,18 @@ static void CapyShell()
 		}
 	}
 }
-//Done
+//Save System will come out soon I hope
 static void TaskApp()
 {
+	struct Task
+	{
+		std::string title;
+		std::string description;
+		std::chrono::system_clock::time_point date;
+		int priority;
+		bool completed;
+	};
+	std::vector<Task> tasks;
 	std::cout << "Welcome to the Task App!" << "\n";
 	while (true)
 	{
@@ -433,7 +433,14 @@ static void TaskApp()
 			try
 			{
 				int markedTask = std::stoi(taskChoice);
-				tasks.erase(tasks.begin() + markedTask);
+				if (markedTask >= 0 && markedTask < static_cast<int>(tasks.size()))
+				{
+					tasks.erase(tasks.begin() + markedTask);
+					std::cout << "Deleted task!" << "\n";
+				}
+				else {
+					std::cout << "Not valid." << "\n";
+				}
 			}
 			catch (const std::invalid_argument)
 			{
