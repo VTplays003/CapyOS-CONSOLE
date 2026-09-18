@@ -455,13 +455,13 @@ public:
 			std::cout << "The enemy's strength is: " << currentEnemy->strength << "\n";
 			std::cout << "The enemy's defense is: " << currentEnemy->defense << "\n";
 		}
-		else if (playerObj.action == "Guard" || playerObj.action == "3" && !playerObj.guarded)
+		else if ((playerObj.action == "Guard" || playerObj.action == "3") && !playerObj.guarded)
 		{
 			std::cout << "You have guarded." << "\n";
 			playerObj.defense += 1;
 			playerObj.guarded = true;
 		}
-		else if (playerObj.action == "Guard" || playerObj.action == "3" && playerObj.guarded)
+		else if ((playerObj.action == "Guard" || playerObj.action == "3") && playerObj.guarded)
 		{
 			std::cout << "You are already guarding." << "\n";
 		}
