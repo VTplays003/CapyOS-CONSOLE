@@ -54,7 +54,7 @@ static void CPPLingo()
 	{
 		SaveSystem.LoadGame(player, progression, inventory.getInventory(), inventory.getDatabase());
 	}
-	while (!player.characterVerifcation)
+	while (!player.characterVerification)
 	{
 		std::cout << "Anyway, let's start creating your character." << "\n";
 		std::cout << "Choose your character's name." << "\n";
@@ -77,12 +77,12 @@ static void CPPLingo()
 		std::cout << "Name: " << player.name << "\n";
 		std::cout << "Race: " << player.RaceToString(player) << "\n";
 		std::cout << "Gender: " << player.GenderToString(player) << "\n";
-		std::getline(std::cin, player.characterComfirmation);
-		if ((player.characterComfirmation == "Yes" || player.characterComfirmation == "Y" || player.characterComfirmation == "y" || player.characterComfirmation == "yes") && player.gender != Gender::Unknown && player.race != Race::undefined)
+		std::getline(std::cin, player.characterConfirmation);
+		if ((player.characterConfirmation == "Yes" || player.characterConfirmation == "Y" || player.characterConfirmation == "y" || player.characterConfirmation == "yes") && player.gender != Gender::Unknown && player.race != Race::undefined)
 		{
 			std::cout << "Character creation complete!" << "\n";
 			SaveSystem.SaveGame(player, progression, inventory.getInventory());
-			player.characterVerifcation = true;
+			player.characterVerification = true;
 			break;
 		}
 		else
@@ -155,7 +155,7 @@ static void CPPLingo()
 		std::cout << "1. Get supplies" << "\n";
 		std::cout << "2. Sign up in the Guild" << "\n";
 		std::cout << "3. Finding somewhere to live." << "\n";
-		std::cout << "Perferably, you should start with 2 and 3. But it's up to you." << "\n";
+		std::cout << "Preferably, you should start with 2 and 3. But it's up to you." << "\n";
 		std::cout << "(You can use the choice number or the name)" << "\n";
 		std::cout << "So, what will it be?" << "\n";
 	}

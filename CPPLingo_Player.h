@@ -27,7 +27,7 @@ class Player
 public:
 	std::string name;
 	std::string input;
-	std::string characterComfirmation;
+	std::string characterConfirmation;
 	std::string loadedCharacter;
 	std::string action;
 	std::string lingoAnswer;
@@ -37,10 +37,10 @@ public:
 	int health = 100;
 	int level = 1;
 	int XP = 0;
-	int stregnth = 1;
+	int strength = 1;
 	int defense = 1;
 	bool guarded = false;
-	bool characterVerifcation = false;
+	bool characterVerification = false;
 	bool hasGuildCard = false;
 	//soon to be optimization stuff
 	void CharacterCustomizationRace(int input)
@@ -208,7 +208,7 @@ public:
 		{
 			std::cout << "C++ is the type of programming language the lingo system runs on." << "\n";
 			std::cout << "As you could see a few lines ago, the box had a hint." << "\n";
-			std::cout << "You'll need to guess what the box is refering to based on the hint." << "\n";
+			std::cout << "You'll need to guess what the box is referring to based on the hint." << "\n";
 			std::cout << "In fact, the answer is the language's name. Try typing it." << "\n";
 			return;
 		}
@@ -579,6 +579,7 @@ public:
 			{
 				std::cout << "No class with ID of " << classID << "\n";
 			}
+
 		}
 	}
 	void attendClass(const std::vector<AcademyClass>& enrolledClasses, CombatSystem& combatSys, Player& playerObj, LingoManual& lingoManual)
