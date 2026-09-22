@@ -57,7 +57,7 @@ jobs:
         
       - name: Install Boost via vcpkg
         run: |
-          vcpkg install boost-beast:x64-windows
+          vcpkg install boost:x64-windows
           vcpkg integrate install
 
       - name: Build
