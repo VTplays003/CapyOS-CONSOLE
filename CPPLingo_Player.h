@@ -352,7 +352,7 @@ public:
 				}
 			}
 		}
-		playerObj.characterVerifcation = true;
+		playerObj.characterVerification = true;
 		loadFile.close();
 	}
 };
@@ -442,7 +442,7 @@ public:
 			{
 				throw std::runtime_error("Tried to divide by zero on CombatSystem.PlayerTurn.Attack. The enemy's defense is 0.");
 			}
-			currentEnemy->health -= playerObj.stregnth / currentEnemy->defense;
+			currentEnemy->health -= playerObj.strength / currentEnemy->defense;
 			std::cout << "The enemy now has: " << currentEnemy->health << "HP" << "\n";
 
 		}
