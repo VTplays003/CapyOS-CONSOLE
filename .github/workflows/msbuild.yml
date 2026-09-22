@@ -9,6 +9,8 @@ on:
 env:
   SOLUTION_FILE_PATH: CapyComputer.slnx
   BUILD_CONFIGURATION: Release
+  # Unified cache directory pointing to the workspace
+  VCPKG_DEFAULT_BINARY_CACHE: '${{ github.workspace }}/vcpkg-cache'
 
 permissions:
   contents: read
@@ -19,12 +21,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js 24
-        uses: actions/setup-node@v7
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version: '20'
 
       - name: Verify Node
         run: node --version
@@ -37,11 +39,27 @@ jobs:
 
       - name: Restore NuGet packages
         run: nuget restore ${{ env.SOLUTION_FILE_PATH }}
-###beast is just a placeholder because I dont want to download the entire boost library
+
+      # Ensure the cache folder exists so actions/cache and vcpkg don't trip over it
+      - name: Create Cache Directory
+        run: mkdir -p "${{ env.VCPKG_DEFAULT_BINARY_CACHE }}"
+        shell: bash
+
+      - name: Cache vcpkg Binary Cache
+        uses: actions/cache@v4
+        with:
+          # FIXED: Matches the env variable exactly
+          path: ${{ env.VCPKG_DEFAULT_BINARY_CACHE }}
+          # Changed fallback key to reflect beast specifically if you use it
+          key: ${{ runner.os }}-vcpkg-boost-beast-v1
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-boost-beast-
+        
       - name: Install Boost via vcpkg
         run: |
           vcpkg install boost-beast:x64-windows
           vcpkg integrate install
 
       - name: Build
-        run: msbuild ${{ env.SOLUTION_FILE_PATH }} /m /p:Configuration=${{ env.BUILD_CONFIGURATION }}
+        run: msbuild ${{ env.SOLUTION_FILE_PATH }} /m /p:Configuration=${{ env.BUILD_CONFIGURATION }} /p:Platform=x64
+
