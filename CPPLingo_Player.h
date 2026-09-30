@@ -370,7 +370,7 @@ public:
 		bool guarded = false;
 		int guardedTurns = 0;
 	};
-	Enemy* currentEnemy = nullptr;
+	std::unique_ptr<Enemy> currentEnemy = nullptr;
 
 	CombatSystem()
 	{
@@ -590,7 +590,7 @@ public:
 			{
 				std::cout << "Today you will learn how to fight enemies." << "\n";
 				auto enemies = combatSys.GetEnemies();
-				combatSys.currentEnemy = &enemies["TestDummy"];
+				combatSys.currentEnemy = std::make_unique<CombatSystem::Enemy>(enemies["TestDummy"]);
 				combatSys.startCombat(playerObj);
 			}
 			else if (classes.ID == 2001)

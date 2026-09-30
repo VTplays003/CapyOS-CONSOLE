@@ -114,7 +114,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp23</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>c:\program files\microsoft visual studio\18\community\common7\ide\extensions\hzwiclye.s1a\SDK\Native\inc;C:\Users\17604\OneDrive\Documents\dev stuff\boost_1_92_0\boost_1_92_0</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -133,7 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp23</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>c:\program files\microsoft visual studio\18\community\common7\ide\extensions\hzwiclye.s1a\SDK\Native\inc;C:\Users\17604\OneDrive\Documents\dev stuff\boost_1_92_0\boost_1_92_0</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
