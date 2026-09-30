@@ -204,7 +204,7 @@ public:
 		std::cout << "Select the page you want to read. (Page Number only)" << "\n";
 		std::getline(std::cin, selectedPage);
 		readPage = std::stoi(selectedPage);
-		if (readPage == 1)
+		if (readPage == 1 && page1 == true)
 		{
 			std::cout << "C++ is the type of programming language the lingo system runs on." << "\n";
 			std::cout << "As you could see a few lines ago, the box had a hint." << "\n";
@@ -212,7 +212,7 @@ public:
 			std::cout << "In fact, the answer is the language's name. Try typing it." << "\n";
 			return;
 		}
-		else if (readPage == 2)
+		else if (readPage == 2 && page2 == true)
 		{
 			std::cout << "Variables are used to store data in a program." << "\n"; 
 			std::cout << "They can hold different types of information, such as numbers or text." << "\n";
