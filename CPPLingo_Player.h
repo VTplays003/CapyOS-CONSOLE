@@ -479,7 +479,8 @@ public:
 		{
 			std::cout << "Invalid action. Please try again." << "\n";
 		}	
-		return;
+	}
+	return;
 	}
 	void enemyTurn(Player& playerObj)
 	{
