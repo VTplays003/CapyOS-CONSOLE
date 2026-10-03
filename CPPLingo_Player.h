@@ -431,7 +431,9 @@ public:
 	void playerTurn(Player& playerObj)
 	{
 		std::cout << "Choose a option. (Number or name)" << "\n";
-		std::cout << "1. Attack" << "\n";
+		while (true)
+		{
+					std::cout << "1. Attack" << "\n";
 		std::cout << "2. Check enemy" << "\n";
 		std::cout << "3. Guard" << "\n";
 		std::cout << "4. Use item" << "\n";
@@ -444,6 +446,7 @@ public:
 			}
 			currentEnemy->health -= playerObj.strength / currentEnemy->defense;
 			std::cout << "The enemy now has: " << currentEnemy->health << "HP" << "\n";
+			break;
 
 		}
 		else if (playerObj.action == "Check enemy" || playerObj.action == "2")
@@ -454,12 +457,14 @@ public:
 			std::cout << "The enemy's health is: " << currentEnemy->health << "\n";
 			std::cout << "The enemy's strength is: " << currentEnemy->strength << "\n";
 			std::cout << "The enemy's defense is: " << currentEnemy->defense << "\n";
+			break;
 		}
 		else if ((playerObj.action == "Guard" || playerObj.action == "3") && !playerObj.guarded)
 		{
 			std::cout << "You have guarded." << "\n";
 			playerObj.defense += 1;
 			playerObj.guarded = true;
+			break;
 		}
 		else if ((playerObj.action == "Guard" || playerObj.action == "3") && playerObj.guarded)
 		{
@@ -468,15 +473,13 @@ public:
 		else if (playerObj.action == "Use item" || playerObj.action == "4")
 		{
 			std::cout << "You have used an item." << "\n";
-			//placeholder
+			break;
 		}
 		else
 		{
 			std::cout << "Invalid action. Please try again." << "\n";
-			playerTurn(playerObj);
-		}
+		}	
 		return;
-		
 	}
 	void enemyTurn(Player& playerObj)
 	{
