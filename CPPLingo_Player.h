@@ -2,10 +2,12 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <random>
 #include <fstream>
 #include <unordered_map>
 #include <map>
 #include <memory>
+#include <cmath>
 enum class Race
 {
 	Capybara,
@@ -34,11 +36,11 @@ public:
 	std::string respawnPos;
 	Gender gender = Gender::Unknown;
 	Race race = Race::undefined;
-	int health = 100;
-	int level = 1;
-	int XP = 0;
-	int strength = 1;
-	int defense = 1;
+	float health = 100;
+	float level = 1;
+	std::uint32_t XP = 0;
+	float strength = 1.1;
+	float defense = 1;
 	bool guarded = false;
 	bool characterVerification = false;
 	bool hasGuildCard = false;
@@ -363,10 +365,10 @@ public:
 	struct Enemy
 	{
 		std::string name;
-		int level = 0;
-		int health = 100;
-		int strength = 1;
-		int defense = 1;
+		float level = 0;
+		float health = 100;
+		float strength = 1;
+		float defense = 1;
 		bool guarded = false;
 		int guardedTurns = 0;
 	};
@@ -374,7 +376,7 @@ public:
 
 	CombatSystem()
 	{
-		enemyDatabase["TestDummy"] = { "Test Dummy", 1, 10, 0, 1, false, 0};
+		enemyDatabase["TestDummy"] = { "Test Dummy", 1, 10, 0, 0, false, 0};
 	}
 
 	void startCombat(Player& playerObj)
@@ -440,9 +442,14 @@ public:
 		std::getline(std::cin, playerObj.action);
 		if (playerObj.action == "Attack" || playerObj.action == "1")
 		{
-			if (currentEnemy->defense == 0)
+			if (currentEnemy->defense <= 0)
 			{
-				throw std::runtime_error("Tried to divide by zero on CombatSystem.PlayerTurn.Attack. The enemy's defense is 0.");
+				//if you somehow got the enemy's defense to 0, i don't know what to say. thats your reward I guess.
+				double damage = std::pow(playerObj.strength, 124.48);
+				std::cout << "The enemy's defense is 0, so you do a lot of damage." << "\n";
+				std::cout << "You do " << damage << " to be exact." << "\n";
+				currentEnemy->health -= static_cast<float>(damage);
+				return;
 			}
 			currentEnemy->health -= playerObj.strength / currentEnemy->defense;
 			std::cout << "The enemy now has: " << currentEnemy->health << "HP" << "\n";
