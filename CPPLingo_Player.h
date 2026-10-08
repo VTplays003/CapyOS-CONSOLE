@@ -515,6 +515,7 @@ public:
 		}
 		else
 		{
+			//failsafe?
 			std::cout << "enemy taunts you i guess" << "\n"; 
 		}
 	}
@@ -600,7 +601,8 @@ public:
 			if (classes.ID == 1001)
 			{
 				std::cout << "Today you will learn how to fight enemies." << "\n";
-				auto enemies = combatSys.GetEnemies();
+				//i tried to make this auto but unfortunately auto& doesnt work with unique_ptr so i had to do this instead
+				std::unordered_map<std::string, CombatSystem::Enemy> enemies = combatSys.GetEnemies();
 				combatSys.currentEnemy = std::make_unique<CombatSystem::Enemy>(enemies["TestDummy"]);
 				combatSys.startCombat(playerObj);
 			}

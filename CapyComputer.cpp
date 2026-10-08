@@ -396,7 +396,23 @@ static void TaskApp()
 			std::getline(std::cin, newDescription);
 			std::cout << "Insert priority number (ONLY NUMBERS): ";
 			std::getline(std::cin, priorityLevel);
-			int priorityNumber = std::stoi(priorityLevel);
+			int priorityNumber = 0;
+			try
+			{
+				priorityNumber = std::stoi(priorityLevel);
+				tasks.push_back({ newTitle, newDescription, std::chrono::system_clock::now(), priorityNumber, false });
+
+			}
+			catch (const std::invalid_argument)
+			{
+				std::cout << "Numbers only please." << "\n";
+				continue;
+			}
+			catch (const std::out_of_range)
+			{
+				std::cout << "Priority number is out of range." << "\n";
+				continue;
+			}
 			tasks.push_back({ newTitle, newDescription, std::chrono::system_clock::now(), priorityNumber, false });
 		}
 		else if (taskChoice == "2" || taskChoice == "Mark task as Done")
