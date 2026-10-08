@@ -602,8 +602,8 @@ public:
 			{
 				std::cout << "Today you will learn how to fight enemies." << "\n";
 				//i tried to make this auto but unfortunately auto& doesnt work with unique_ptr so i had to do this instead
-				std::unordered_map<std::string, CombatSystem::Enemy> enemies = combatSys.GetEnemies();
-				combatSys.currentEnemy = std::make_unique<CombatSystem::Enemy>(enemies["TestDummy"]);
+				const std::unordered_map<std::string, CombatSystem::Enemy>& enemies = combatSys.GetEnemies();
+				combatSys.currentEnemy = std::make_unique<CombatSystem::Enemy>(enemies.at("TestDummy"));
 				combatSys.startCombat(playerObj);
 			}
 			else if (classes.ID == 2001)

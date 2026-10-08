@@ -405,15 +405,14 @@ static void TaskApp()
 			}
 			catch (const std::invalid_argument)
 			{
-				std::cout << "Numbers only please." << "\n";
+				std::cout << "Numbers only please. Task creation failed." << "\n";
 				continue;
 			}
 			catch (const std::out_of_range)
 			{
-				std::cout << "Priority number is out of range." << "\n";
+				std::cout << "Priority number is out of range. Task creation failed." << "\n";
 				continue;
 			}
-			tasks.push_back({ newTitle, newDescription, std::chrono::system_clock::now(), priorityNumber, false });
 		}
 		else if (taskChoice == "2" || taskChoice == "Mark task as Done")
 		{
