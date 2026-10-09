@@ -36,7 +36,7 @@ added the vcxproj file also
 edited the MSBuild yml file to download git using vcpkg. It took over an hour.
 
 ## 8a50d8f - 8/21/26
-Tried vibe coding the yml file. Please don't do this. I wasted about 30 minutes of time trying to fix it.
+Tried vibe coding the yml file. Please don't do this. I wasted about a day of time trying to fix it.
 
 ## 61b4c68 - 8/21/26
 tried fixing it, didn't work. public service annoucement: don't vibe code.
