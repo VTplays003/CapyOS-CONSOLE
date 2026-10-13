@@ -7,6 +7,10 @@ The update log goes like this:
 
 (stuff that was changed)
 
+to prevent a repetive loop of updating the log to cover the previous update of the log so now I have to update the log to the update that talks about updating the log because of that update and...
+
+okay you get it. I will not cover any commits that are just updating the log itself except for the creation of this log.
+
 here goes
 ## 0462643 - 8/20/26
 added the project files like CPPLingo_Player.h and CapyComputer.cpp 
@@ -92,4 +96,28 @@ for the "welcome to CapyOS" markdown, I explained why my commit messages are kin
 ## bf24562 - 9/12/26
 I learned about operator predcendance and fixed some issues regarding my character customization system.
 
-##
+## d500819 - 9/13/26
+tried a-shell on my phone, switched it for SpckEditor instead.
+
+## fcdddf6 - 9/13/26
+added a assert check to see if the file stream for the save file was opened correctly. little did I know that only worked in debug mode
+
+## 68dfd30 - 9/13/26
+added more logic to the release version if the file didnt open correctly. 
+
+## cf87ddf - 9/14/26
+fixed a dangling pointer issue. also I finally got my version count together to come up with v0.2.4
+
+## 2e63ee0 - 9/14/26
+deleted C/C++ CI workflow because I didn't use it anymore which made it a waste of space.
+
+## 1fcca3d - 9/14/26
+set currentEnemy to nullptr after enemy defeat. unfortunately, I forgot to set it to nullptr after the player defeated the enemy. I'll deal with that later
+
+## 51940eb - 9/17/26
+fixed task deletion not checking for task number out of range.
+
+## 075e040 - 9/17/26
+fixed operator precedence issue on CombatSystem::playerTurn()
+
+## 
