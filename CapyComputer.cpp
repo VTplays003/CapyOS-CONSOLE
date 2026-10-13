@@ -396,19 +396,29 @@ static void TaskApp()
 			std::getline(std::cin, newDescription);
 			std::cout << "Insert priority number (ONLY NUMBERS): ";
 			std::getline(std::cin, priorityLevel);
-			int priorityNumber = 0;
+			int priorityNumber = 1;
+			std::size_t pos = 0;
 			try
 			{
-				priorityNumber = std::stoi(priorityLevel);
+				//pre check if the entire string conists of numbers only
+				priorityNumber = std::stoi(priorityLevel, &pos);
+				if (pos != priorityLevel.length())
+				{
+					throw std::invalid_argument("Invalid input. Not a number.");
+				}
+				if (priorityNumber <= 0)
+				{
+					throw std::out_of_range("Priority number is out of range.");
+				}
 				tasks.push_back({ newTitle, newDescription, std::chrono::system_clock::now(), priorityNumber, false });
 
 			}
-			catch (const std::invalid_argument)
+			catch (const std::invalid_argument& e)
 			{
 				std::cout << "Numbers only please. Task creation failed." << "\n";
 				continue;
 			}
-			catch (const std::out_of_range)
+			catch (const std::out_of_range& e)
 			{
 				std::cout << "Priority number is out of range. Task creation failed." << "\n";
 				continue;

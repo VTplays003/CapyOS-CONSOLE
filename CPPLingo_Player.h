@@ -158,9 +158,9 @@ class Inventory
 	public:
 		Inventory()
 		{
-			itemDatabase["Beginner Uniform"] = { "Guild Academy Uniform", "The standard guild uniform for students", 1, Item::ItemType::Equipment, {0, 0, 0, false} };
-			itemDatabase["Beginner Armor"] = {"Guild Academy Armor", "The standard guild armor for students. Created with weak leather.", 1, Item::ItemType::Equipment, {0, 0, 0, false}};
-			itemDatabase["Beginner Sword"] = { "Guild Academy Sword", "The standard guild sword for students. Created with steel.", 1, Item::ItemType::Equipment, {0, 0, 0, false} };
+			itemDatabase["Beginner Uniform"] = { "Beginner Uniform", "The standard guild uniform for students", 1, Item::ItemType::Equipment, {0, 0, 0, false} };
+			itemDatabase["Beginner Armor"] = {"Beginner Armor", "The standard guild armor for students. Created with weak leather.", 1, Item::ItemType::Equipment, {0, 0, 0, false}};
+			itemDatabase["Beginner Sword"] = { "Beginner Sword", "The standard guild sword for students. Created with steel.", 1, Item::ItemType::Equipment, {0, 0, 0, false} };
 		}
 		//for this function, you have to put the exact item key (the [string] in the constructor), otherwise it won't work.
 		void addItem(const std::string& itemName)
@@ -174,6 +174,28 @@ class Inventory
 			else
 			{
 				std::cout << "Item not found in database." << "\n";
+			}
+			for (const auto& item : inventoryObj)
+			{
+				std::cout << "Inventory Item: " << item.name << "\n";
+				std::cout << "Description: " << item.description << "\n";
+				std::cout << "Quantity: " << item.quantity << "\n";
+				std::cout << "Type: ";
+				switch (item.type)
+				{
+				case Item::ItemType::Consumable:
+					std::cout << "Consumable" << "\n";
+					break;
+				case Item::ItemType::Equipment:
+					std::cout << "Equipment" << "\n";
+					break;
+				case Item::ItemType::Miscellaneous:
+					std::cout << "Miscellaneous" << "\n";
+					break;
+				default:
+					std::cout << "Unknown" << "\n";
+					break;
+				}
 			}
 		}
 		void useItem(Item item)
@@ -572,7 +594,6 @@ public:
 				addClass = false;
 				break;
 			}
-			//while in my debugging I found out that .find() looks for the key of the value so instead of using chatgpt i changed the key
 			int classID = std::stoi(addedClass);
 			auto finder = classesAvailible.find(classID);
 			if (finder != classesAvailible.end())
@@ -617,4 +638,13 @@ public:
 private:
 	std::map<int, AcademyClass> classesAvailible;
 	std::vector<AcademyClass> classesEnrolled;
+};
+
+class StorySystem 
+{
+	void StartClient()
+	{
+		std::cout << "Starting Client..." << "\n";
+		std::cout << "Client started!" << "\n"; 
+	}
 };
