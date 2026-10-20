@@ -9,8 +9,10 @@ on:
 env:
   SOLUTION_FILE_PATH: CapyComputer.slnx
   BUILD_CONFIGURATION: Release
-  # Unified cache directory pointing to the workspace
-  VCPKG_DEFAULT_BINARY_CACHE: '${{ github.workspace }}/vcpkg-cache'
+  PLATFORM: x64
+  VCPKG_DEFAULT_BINARY_CACHE: ${{ github.workspace }}/vcpkg-cache
+  VCPKG_ROOT: ${{ github.workspace }}/vcpkg
+  VCPKG_TRIPLET: x64-windows
 
 permissions:
   contents: read
@@ -26,7 +28,7 @@ jobs:
       - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Verify Node
         run: node --version
@@ -34,13 +36,33 @@ jobs:
       - name: Verify npm
         run: npm --version
 
-      - name: Add MSBuild to PATH
+      - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: Restore NuGet packages
-        run: nuget restore ${{ env.SOLUTION_FILE_PATH }}
+      - name: Install vcpkg
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "${{ env.VCPKG_ROOT }}")) {
+            git clone https://github.com/microsoft/vcpkg.git "${{ env.VCPKG_ROOT }}"
+            & "${{ env.VCPKG_ROOT }}\bootstrap-vcpkg.bat"
+          } else {
+            Write-Host "vcpkg already exists"
+          }
 
-      # Ensure the cache folder exists so actions/cache and vcpkg don't trip over it
+      - name: Add vcpkg to PATH
+        shell: pwsh
+        run: |
+          echo "${{ env.VCPKG_ROOT }}" >> $env:GITHUB_PATH
+
+      - name: Install C++ dependencies
+        shell: pwsh
+        run: |
+          vcpkg install boost-beast:x64-windows boost-json:x64-windows openssl:x64-windows --triplet x64-windows
+          vcpkg integrate install
+
+      - name: Restore NuGet packages
+        run: nuget restore "${{ env.SOLUTION_FILE_PATH }}"
+
       - name: Create Cache Directory
         run: mkdir -p "${{ env.VCPKG_DEFAULT_BINARY_CACHE }}"
         shell: bash
@@ -48,18 +70,17 @@ jobs:
       - name: Cache vcpkg Binary Cache
         uses: actions/cache@v4
         with:
-          # FIXED: Matches the env variable exactly
           path: ${{ env.VCPKG_DEFAULT_BINARY_CACHE }}
-          # Changed fallback key to reflect beast specifically if you use it
-          key: ${{ runner.os }}-vcpkg-boost-beast-v1
+          key: ${{ runner.os }}-vcpkg-capy-cpp-v1
           restore-keys: |
-            ${{ runner.os }}-vcpkg-boost-beast-
-        
-      - name: Install Boost via vcpkg
-        run: |
-          vcpkg install boost-beast:x64-windows
-          vcpkg integrate install
+            ${{ runner.os }}-vcpkg-capy-cpp-
 
       - name: Build
-        run: msbuild ${{ env.SOLUTION_FILE_PATH }} /m /p:Configuration=${{ env.BUILD_CONFIGURATION }} /p:Platform=x64
-
+        shell: pwsh
+        run: |
+          msbuild "${{ env.SOLUTION_FILE_PATH }}" `
+            /m `
+            /p:Configuration="${{ env.BUILD_CONFIGURATION }}" `
+            /p:Platform="${{ env.PLATFORM }}" `
+            /p:VcpkgEnabled=true `
+            /p:VcpkgTriplet="${{ env.VCPKG_TRIPLET }}"
