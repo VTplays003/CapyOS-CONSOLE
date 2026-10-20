@@ -44,7 +44,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableASAN>true</EnableASAN>
+    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -112,14 +112,16 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_JSON_NO_LIB;BOOST_ALL_NO_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>c:\program files\microsoft visual studio\18\community\common7\ide\extensions\hzwiclye.s1a\SDK\Native\inc;C:\Users\17604\OneDrive\Documents\dev stuff\boost_1_92_0\boost_1_92_0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>c:\program files\microsoft visual studio\18\community\common7\ide\extensions\hzwiclye.s1a\SDK\Native\inc;C:\Users\17604\OneDrive\Documents\dev stuff\boost_1_92_0\boost_1_92_0;C:\Program Files\OpenSSL-Win64\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libssl.lib;libcrypto.lib;libboost_json-vc145-mt-gd-x64-1_92.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\17604\OneDrive\Documents\dev stuff\boost_1_92_0\boost_1_92_0\libs\json;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MD;C:\Users\17604\OneDrive\Documents\dev stuff\boost_1_92_0\boost_1_92_0\stage\lib</AdditionalLibraryDirectories>
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
@@ -131,14 +133,16 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_JSON_NO_LIB;BOOST_ALL_NO_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>c:\program files\microsoft visual studio\18\community\common7\ide\extensions\hzwiclye.s1a\SDK\Native\inc;C:\Users\17604\OneDrive\Documents\dev stuff\boost_1_92_0\boost_1_92_0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>c:\program files\microsoft visual studio\18\community\common7\ide\extensions\hzwiclye.s1a\SDK\Native\inc;C:\Users\17604\OneDrive\Documents\dev stuff\boost_1_92_0\boost_1_92_0;C:\Program Files\OpenSSL-Win64\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libssl.lib;libcrypto.lib;libboost_json-vc145-mt-gd-x64-1_92.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\17604\OneDrive\Documents\dev stuff\boost_1_92_0\boost_1_92_0\libs\json;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MD;C:\Users\17604\OneDrive\Documents\dev stuff\boost_1_92_0\boost_1_92_0\stage\lib</AdditionalLibraryDirectories>
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>
@@ -153,11 +157,13 @@
     <ClInclude Include="CPPLingo_Player.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cacert.pem" />
     <None Include="UpdateLog.md">
       <SubType>
       </SubType>
     </None>
     <None Include="formatting_guide.md" />
+    <None Include="vcpkg.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

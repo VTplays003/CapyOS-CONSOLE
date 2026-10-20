@@ -1,6 +1,8 @@
 //boost includes
 #include <boost/version.hpp>
 #include <boost/beast.hpp>
+#include <boost/asio.hpp>
+#include <boost/json.hpp>
 //regular includes
 #include <iostream>
 #include <string>
@@ -18,12 +20,19 @@
 #include <cassert>
 #include <iomanip>
 #include "CPPLingo_Player.h"
+#include "CapyManager.h"
 //THIS IS A SOURCE FILE. PLEASE DO NOT USE IT AS A HEADER.
 //the reason i dont use using namespace std; is because I want to learn to tolerate std:: and its only an extra 5 characters to type :)
 //Current Development
 static void CapyManager()
 {
-	//if this is here a-shell works 
+	InteractionSystem interactionManager;
+	NetworkSystem networkManager;
+	bool networkConnectionSuccessful = networkManager.TestConnection();
+	if (!networkConnectionSuccessful)
+	{
+		std::cout << "Check your internet settings and try again." << "\n";
+	}
 }
 //Fixing bugs...
 static void CPPLingo()
@@ -578,10 +587,18 @@ static void installCapyComputer()
 int main()
 {
 	//i had to manually do this because the capy command on Capyshell kept printing some ancient language.
+	int overrideCommand = 1;
 	SetConsoleOutputCP(CP_UTF8);
 	std::cout << "Hello and welcome to the CapyComputer Installation Client!" << "\n";
 	std::cout << "This runs on Boost version " << BOOST_VERSION << " and also MVSC C++23 with Git for Windows installed." << "\n";
 	std::cout << "Redirecting to the CapyComputer Installation Client..." << "\n";
-	installCapyComputer();
-	return 0;
+	switch (overrideCommand)
+	{
+	case 1:
+		CapyManager();
+		return 1;
+	default:
+		installCapyComputer();
+		return 0;
+	}
 }

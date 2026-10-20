@@ -175,6 +175,25 @@ class Inventory
 			{
 				std::cout << "Item not found in database." << "\n";
 			}
+		}
+		void useItem(Item item)
+		{
+			//also placehold
+		}
+		const std::vector<Item>& getInventory() const
+		{
+			return inventoryObj;
+		}
+		std::vector<Item>& getInventory()
+		{
+			return inventoryObj;
+		}
+		std::unordered_map<std::string, Item>& getDatabase()
+		{
+			return itemDatabase;
+		}
+		void displayInventory()
+		{
 			for (const auto& item : inventoryObj)
 			{
 				std::cout << "Inventory Item: " << item.name << "\n";
@@ -197,22 +216,6 @@ class Inventory
 					break;
 				}
 			}
-		}
-		void useItem(Item item)
-		{
-			//also placehold
-		}
-		const std::vector<Item>& getInventory() const
-		{
-			return inventoryObj;
-		}
-		std::vector<Item>& getInventory()
-		{
-			return inventoryObj;
-		}
-		std::unordered_map<std::string, Item>& getDatabase()
-		{
-			return itemDatabase;
 		}
 	private:
 		std::vector<Item> inventoryObj;
@@ -642,6 +645,7 @@ private:
 
 class StorySystem 
 {
+public:
 	void StartClient()
 	{
 		std::cout << "Starting Client..." << "\n";
