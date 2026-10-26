@@ -25,62 +25,48 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Verify Node
-        run: node --version
-
-      - name: Verify npm
-        run: npm --version
-
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
       - name: Install vcpkg
         shell: pwsh
         run: |
-          if (-not (Test-Path "${{ env.VCPKG_ROOT }}")) {
-            git clone https://github.com/microsoft/vcpkg.git "${{ env.VCPKG_ROOT }}"
-            & "${{ env.VCPKG_ROOT }}\bootstrap-vcpkg.bat"
-          } else {
-            Write-Host "vcpkg already exists"
+          if (-not (Test-Path "$env:VCPKG_ROOT")) {
+            git clone https://github.com/microsoft/vcpkg.git "$env:VCPKG_ROOT"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+            & "$env:VCPKG_ROOT\bootstrap-vcpkg.bat" -disableMetrics
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
 
-      - name: Add vcpkg to PATH
-        shell: pwsh
-        run: |
-          echo "${{ env.VCPKG_ROOT }}" >> $env:GITHUB_PATH
-
-      - name: Install C++ dependencies
-        shell: pwsh
-        run: |
-          vcpkg install boost-beast:x64-windows boost-json:x64-windows openssl:x64-windows --triplet x64-windows
-          vcpkg integrate install
-
-      - name: Restore NuGet packages
-        run: nuget restore "${{ env.SOLUTION_FILE_PATH }}"
+          "$env:VCPKG_ROOT" >> $env:GITHUB_PATH
 
       - name: Create Cache Directory
-        run: mkdir -p "${{ env.VCPKG_DEFAULT_BINARY_CACHE }}"
-        shell: bash
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path "$env:VCPKG_DEFAULT_BINARY_CACHE" | Out-Null
 
       - name: Cache vcpkg Binary Cache
         uses: actions/cache@v4
         with:
           path: ${{ env.VCPKG_DEFAULT_BINARY_CACHE }}
-          key: ${{ runner.os }}-vcpkg-capy-cpp-v1
+          key: ${{ runner.os }}-vcpkg-capy-cpp-v2
           restore-keys: |
             ${{ runner.os }}-vcpkg-capy-cpp-
+
+      - name: Install C++ dependencies
+        shell: pwsh
+        run: |
+          & "$env:VCPKG_ROOT\vcpkg.exe" install boost-headers boost-beast boost-json openssl --triplet "$env:VCPKG_TRIPLET"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Build
         shell: pwsh
         run: |
-          msbuild "${{ env.SOLUTION_FILE_PATH }}" `
+          msbuild "$env:SOLUTION_FILE_PATH" `
             /m `
-            /p:Configuration="${{ env.BUILD_CONFIGURATION }}" `
-            /p:Platform="${{ env.PLATFORM }}" `
+            /p:Configuration="$env:BUILD_CONFIGURATION" `
+            /p:Platform="$env:PLATFORM" `
             /p:VcpkgEnabled=true `
-            /p:VcpkgTriplet="${{ env.VCPKG_TRIPLET }}"
+            /p:VcpkgRoot="$env:VCPKG_ROOT\" `
+            /p:VcpkgTriplet="$env:VCPKG_TRIPLET"
