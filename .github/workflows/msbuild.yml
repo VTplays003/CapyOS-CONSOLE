@@ -57,7 +57,7 @@ jobs:
       - name: Install C++ dependencies
         shell: pwsh
         run: |
-          & "$env:VCPKG_ROOT\vcpkg.exe" install boost-headers boost-beast boost-json openssl --triplet "$env:VCPKG_TRIPLET"
+          vcpkg install
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Build
