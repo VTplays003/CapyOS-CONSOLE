@@ -3,6 +3,8 @@
 	"version-string": "1.0.0",
 	"builtin-baseline": "bf19794383e8fb95eba5aa553235bc8ec2271688",
 	"dependencies": [
-		"curl"
+		"curl",
+		"openssl",
+    "boost-beast"
 	]
 }
