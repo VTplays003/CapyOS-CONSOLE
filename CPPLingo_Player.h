@@ -422,36 +422,7 @@ public:
 			std::cout << "It is now your turn." << "\n";
 			playerTurn(playerObj);
 			enemyTurn(playerObj);
-			if (playerObj.health <= 0)
-			{
-				std::cout << "Combat has ended.";
-				std::cout << "You fainted and had to be taken to your respawn point" << "\n";
-				inCombat = false;
-				break;
-			}
-			else if (currentEnemy->health <= 0)
-			{
-				std::cout << "Combat has ended." << "\n";
-				std::cout << "The enemy falls in defeat and you get some stuff." << "\n";
-				inCombat = false;
-				currentEnemy = nullptr;
-				break;
-			}
-			if (playerObj.guarded)
-			{
-				playerObj.defense -= 1;
-				playerObj.guarded = false;
-			}
-			else if (currentEnemy->guarded == true && currentEnemy->guardedTurns >= 1)
-			{
-				currentEnemy->defense -= 1;
-				currentEnemy->guarded = false;
-				currentEnemy->guardedTurns = 0;
-			}
-			else
-			{
-				currentEnemy->guardedTurns++;
-			}
+			CombatTick(playerObj);
 		}
 		return;
 	}
@@ -476,7 +447,12 @@ public:
 				currentEnemy->health -= static_cast<float>(damage);
 				return;
 			}
-			currentEnemy->health -= playerObj.strength / currentEnemy->defense;
+			int damage = static_cast<int>(playerObj.strength / currentEnemy->defense);
+			if (damage < 1)
+			{
+				damage = 1;
+			}
+			currentEnemy->health -= static_cast<float>(damage);
 			std::cout << "The enemy now has: " << currentEnemy->health << "HP" << "\n";
 			break;
 
@@ -542,6 +518,44 @@ public:
 		{
 			//failsafe?
 			std::cout << "enemy taunts you i guess" << "\n"; 
+		}
+	}
+	int CombatTick(Player& playerObj)
+	{
+		while (inCombat)
+		{
+			playerTurn(playerObj);
+			enemyTurn(playerObj);
+			if (playerObj.health <= 0)
+			{
+				std::cout << "Combat has ended.";
+				std::cout << "You fainted and had to be taken to your respawn point" << "\n";
+				inCombat = false;
+				return 1;
+			}
+			else if (currentEnemy->health <= 0)
+			{
+				std::cout << "Combat has ended." << "\n";
+				std::cout << "The enemy falls in defeat and you get some stuff." << "\n";
+				inCombat = false;
+				currentEnemy = nullptr;
+				return 0;
+			}
+			if (playerObj.guarded)
+			{
+				playerObj.defense -= 1;
+				playerObj.guarded = false;
+			}
+			if (currentEnemy->guarded == true && currentEnemy->guardedTurns >= 1)
+			{
+				currentEnemy->defense -= 1;
+				currentEnemy->guarded = false;
+				currentEnemy->guardedTurns = 0;
+			}
+			else if (currentEnemy->guarded == true && currentEnemy->guardedTurns < 1)
+			{
+				currentEnemy->guardedTurns++;
+			}
 		}
 	}
 	const std::unordered_map<std::string, Enemy>& GetEnemies()

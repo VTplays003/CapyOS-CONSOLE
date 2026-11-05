@@ -10,7 +10,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -18,12 +17,10 @@
     <RootNamespace>CapyComputer</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseDebugLibraries Condition="'$(Configuration)'=='Debug'">true</UseDebugLibraries>
     <UseDebugLibraries Condition="'$(Configuration)'=='Release'">false</UseDebugLibraries>
@@ -31,54 +28,61 @@
     <ConformanceMode>true</ConformanceMode>
     <LanguageStandard>stdcpp20</LanguageStandard>
   </PropertyGroup>
+<<<<<<< Updated upstream
 
   <PropertyGroup Label="Vcpkg">
   <VcpkgEnableManifest>true</VcpkgEnableManifest>
   </PropertyGroup>
 
+=======
+>>>>>>> Stashed changes
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
-
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Users\17604\OneDrive\Documents\dev stuff\boost_1_92_0\boost_1_92_0;C:\Program Files\OpenSSL-Win64\include\openssl;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\OpenSSL-Win64\lib\VC\x64\MD;C:\Users\17604\OneDrive\Documents\dev stuff\boost_1_92_0\boost_1_92_0\libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnableManifest>false</VcpkgEnableManifest>
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BOOST_JSON_NO_LIB;BOOST_ALL_NO_LIB;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(VcpkgRoot)installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\OpenSSL-Win64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
-
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(VcpkgRoot)installed\x64-windows\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libssl.lib;libcrypto.lib;boost_json.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(VcpkgRoot)installed\x64-windows\lib;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MDd;C:\Users\17604\OneDrive\Documents\dev stuff\boost_1_92_0\boost_1_92_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libssl.lib;libcrypto.lib;libboost_json-vc145-mt-gd-x64-1_92.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
   <ItemGroup>
     <ClCompile Include="CapyComputer.cpp" />
   </ItemGroup>
-
   <ItemGroup>
     <ClInclude Include="CapyComputer.h" />
     <ClInclude Include="CapyManager.h" />
     <ClInclude Include="CPPLingo_Player.h" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="cacert.pem" />
     <None Include="UpdateLog.md" />
     <None Include="formatting_guide.md" />
     <None Include="vcpkg.json" />
   </ItemGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

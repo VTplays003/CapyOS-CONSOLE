@@ -5,6 +5,7 @@
 	"dependencies": [
 		"curl",
 		"openssl",
-    "boost-beast"
+		"boost-beast",
+		"boost-headers"
 	]
 }

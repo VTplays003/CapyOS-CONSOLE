@@ -586,9 +586,11 @@ static void installCapyComputer()
 
 int main()
 {
+	int overrideCommand = 0;
 	//i had to manually do this because the capy command on Capyshell kept printing some ancient language.
-	int overrideCommand = 1;
 	SetConsoleOutputCP(CP_UTF8);
+	std::cout << "Override command input (numbers only), don't put anything here if you want the default functionality." << "\n";
+	std::cin >> overrideCommand;
 	std::cout << "Hello and welcome to the CapyComputer Installation Client!" << "\n";
 	std::cout << "This runs on Boost version " << BOOST_VERSION << " and also MVSC C++23 with Git for Windows installed." << "\n";
 	std::cout << "Redirecting to the CapyComputer Installation Client..." << "\n";
@@ -598,6 +600,7 @@ int main()
 		CapyManager();
 		return 1;
 	default:
+		std::cin.ignore();
 		installCapyComputer();
 		return 0;
 	}
