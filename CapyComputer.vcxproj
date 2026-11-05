@@ -32,6 +32,10 @@
     <LanguageStandard>stdcpp20</LanguageStandard>
   </PropertyGroup>
 
+  <PropertyGroup Label="Vcpkg">
+  <VcpkgEnableManifest>true</VcpkgEnableManifest>
+  </PropertyGroup>
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
 
   <PropertyGroup Label="UserMacros" />
@@ -57,6 +61,7 @@
       <AdditionalDependencies>libssl.lib;libcrypto.lib;boost_json.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+
 
   <ItemGroup>
     <ClCompile Include="CapyComputer.cpp" />
