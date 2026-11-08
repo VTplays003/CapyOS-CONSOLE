@@ -8,6 +8,7 @@
 #include <map>
 #include <memory>
 #include <cmath>
+#include <boost/multiprecision/cpp_dec_float.hpp>
 enum class Race
 {
 	Capybara,
@@ -401,7 +402,7 @@ public:
 
 	CombatSystem()
 	{
-		enemyDatabase["TestDummy"] = { "Test Dummy", 1, 10, 0, 0, false, 0};
+		enemyDatabase["TestDummy"] = { "Test Dummy", 1, 10, 0, 1, false, 0};
 	}
 
 	void startCombat(Player& playerObj)
@@ -557,6 +558,21 @@ public:
 				currentEnemy->guardedTurns++;
 			}
 		}
+	}
+	std::pair<boost::multiprecision::cpp_dec_float_50, int> JiraTests(Player& playerObj)
+	{
+		boost::multiprecision::cpp_dec_float_50 damage = 0;
+		if (currentEnemy->defense == 0)
+		{
+			damage = std::pow(playerObj.strength, 124.48);
+			std::cout << "Damage calculated: " << damage << "\n";
+			std::cout << "Damage casted to int: " << static_cast<int>(damage) << "\n";
+			return {damage, static_cast<int>(damage)};
+		}
+		damage = playerObj.strength / currentEnemy->defense;
+		std::cout << "Damage calculated: " << damage << "\n";
+		std::cout << "Damage casted to int: " << static_cast<int>(damage) << "\n";
+		return {damage, static_cast<int>(damage)};
 	}
 	const std::unordered_map<std::string, Enemy>& GetEnemies()
 	{
