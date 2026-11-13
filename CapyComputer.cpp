@@ -21,6 +21,7 @@
 #include <iomanip>
 #include "CPPLingo_Player.h"
 #include "CapyManager.h"
+#include "CapyShell.hpp"
 //THIS IS A SOURCE FILE. PLEASE DO NOT USE IT AS A HEADER.
 //the reason i dont use using namespace std; is because I want to learn to tolerate std:: and its only an extra 5 characters to type :)
 //Current Development
@@ -283,57 +284,15 @@ static void CPPLingo()
 	std::cout << "You now know some basics of C++ and how to fight." << "\n";
 	std::cout << "It's time to go to the guild for some quests" << "\n";
 }
-//Memory Overhaul Soon
+
+//v0.2 in works
 static void CapyShell()
 {
-	//memory commands are in the works
-	std::string command;
+	Parser terminal;
 	std::cout << "You are in the CapyShell terminal. Use 'exit' to go back to CapybaraSystemsOS." << "\n";
 	std::cout << "Please type a command. (Beginners should use 'help' first)" << "\n";
-	while (true)
-	{
-		std::getline(std::cin, command);
-		if (command == "help")
-		{
-			std::cout << "'help' - used to list the commands of CapyShell." << "\n";
-			std::cout << "'echo (string)' - used to print things in the terminal. Please add a space between echo and the string" << "\n";
-			std::cout << "'capy' - prints out a ASCII capybara" << "\n";
-			std::cout << "'version' - used to get the version for CapyShell" << "\n";
-			std::cout << "'exit' - used to return back to CapybaraSystemsOS" << "\n";
-			std::cout << "Put these keywords/commmands at the beginning of the line!" << "\n";
-		}
-		else if (command.contains("echo"))
-		{
-			std::size_t echo_pos = command.find("echo");
-			std::string result = command.substr(echo_pos + 5);
-			std::cout << result << "\n";
-		}
-		else if (command.contains("capy"))
-		{
-			std::cout << "⠀⠀⢀⣀⠤⠿⢤⢖⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
-					  << "⡔⢩⠂⠀⠒⠗⠈⠀⠉⠢⠄⣀⠠⠤⠄⠒⢖⡒⢒⠂⠤⢄⠀⠀⠀ \n"
-					  << "⠇⠤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠈⠀⠈⠈⡨⢀⠡⡪⠢⡀⠀\n"
-					  << "⠈⠒⠀⠤⠤⣄⡆⡂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠢⠀⢕⠱⠀\n"
-					  << "⠀⠀⠀⠀⠀⠈⢳⣐⡐⠐⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠁⠇\n"
-					  << "       ⠑⢤⢁⠀⠆⠀⠀⠀⠀⠀⢀⢰⠀⠀⠀⡀⢄⡜ \n"
-					  << "         ⠘⡦⠄⡷⠢⠤⠤⠤⠤⢬⢈⡇⢠⣈⣰⠎ \n"
-					  << "          ⣃⢸⡇⠀⠀⠀⠀⠀⠈⢪⢀⣺⡅⢈⠆ \n"
-					  << "⠀⠀⠀⠀⠀⠀⠀ ⠶⡿⠤⠚⠁⠀⠀⠀⢀⣠⡤⢺⣥⠟⢡⠃⠀ \n";
-				std::cout << "Credits to TextArtCopy.com" << "\n";
-		}
-		else if (command.contains("version"))
-		{
-			std::cout << "CapyShell, Version 0.0.1.0" << "\n";
-		}
-		else if (command.contains("exit"))
-		{
-			break;
-			return;
-		}
-		else {
-			std::cout << "invalid" << "\n";
-		}
-	}
+	terminal.initTerminal();
+	terminal.parseCommand(terminal.command);
 }
 //Save System will come out soon I hope
 static void TaskApp()
@@ -583,7 +542,8 @@ static void installCapyComputer()
 		}
 	}
 }
-
+//comment out the preprocessor ifs when not in quality check stage. This is to prevent the main() function from being compiled when running unit tests.
+#ifndef TEST_BUILD
 int main()
 {
 	int overrideCommand = 0;
@@ -597,7 +557,8 @@ int main()
 	switch (overrideCommand)
 	{
 	case 1:
-		CapyManager();
+		std::cin.ignore();
+		CapyShell();
 		return 1;
 	default:
 		std::cin.ignore();
@@ -605,3 +566,4 @@ int main()
 		return 0;
 	}
 }
+#endif
