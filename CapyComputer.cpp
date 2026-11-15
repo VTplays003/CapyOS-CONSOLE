@@ -33,7 +33,10 @@ static void CapyManager()
 	if (!networkConnectionSuccessful)
 	{
 		std::cout << "Check your internet settings and try again." << "\n";
+		return;
 	}
+	interactionManager.SetupConnectionWTools();
+	interactionManager.DisplayConnections();
 }
 //Fixing bugs...
 static void CPPLingo()
@@ -285,12 +288,10 @@ static void CPPLingo()
 	std::cout << "It's time to go to the guild for some quests" << "\n";
 }
 
-//v0.2 in works
+//pause dev
 static void CapyShell()
 {
 	Parser terminal;
-	std::cout << "You are in the CapyShell terminal. Use 'exit' to go back to CapybaraSystemsOS." << "\n";
-	std::cout << "Please type a command. (Beginners should use 'help' first)" << "\n";
 	terminal.initTerminal();
 	terminal.parseCommand(terminal.command);
 }
@@ -558,7 +559,7 @@ int main()
 	{
 	case 1:
 		std::cin.ignore();
-		CapyShell();
+		CapyManager();
 		return 1;
 	default:
 		std::cin.ignore();
