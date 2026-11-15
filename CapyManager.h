@@ -23,7 +23,71 @@ using tcp = net::ip::tcp;
 
 class InteractionSystem
 {
-
+public:
+	struct HttpTarget
+	{
+		std::string host;
+		std::vector<std::string> AvailableTargets;
+	};
+	void SetupConnectionWTools()
+	{
+		std::cout << "This is meant to be a productive tool used to interact with websites";
+		std::cout << " such as Jira, and Github. Please don't misuse it. (I wouldn't want a lawsuit on my hands)" << "\n"; 
+		std::cout << "This tool is still in development, so please be patient with it." << "\n";
+		std::cout << "Here, you will be setting up availible connections for NetworkSystem to use." << "\n"; 
+		//i would add saving here but im lazy, ill program it later.
+		while (true)
+		{
+			HttpTarget connection;
+			std::cout << "Enter host name (e.g. github.com) or 'exit' if you want to finish: " << "\n";
+			std::getline(std::cin, connection.host);
+			if (connection.host == "exit")
+			{
+				break;
+			}
+			else
+			{
+				std::cout << "Enter availible targets (e.g. /api/v1/users) for " << connection.host << " and leave empty to end: " << "\n";
+				while (true)
+				{
+					std::string target;
+					std::getline(std::cin, target);
+					if (target.empty())
+					{
+						break;
+					}
+					connection.AvailableTargets.push_back(target);
+				}
+			}
+			connections.insert(std::make_pair(connection.host, connection));
+		}
+	}
+	std::pair<std::string, std::string> GetUserConnectionInput()
+	{
+		std::string host, port;
+		std::cout << "Enter host: ";
+		std::getline(std::cin, host);
+		std::cout << "Enter port: ";
+		std::getline(std::cin, port);
+		return std::make_pair(host, port);
+	}
+	void DisplayConnections()
+	{
+		std::cout << "Availible connections:" << "\n";
+		for (const auto& pair : connections)
+		{
+			std::cout << "Host: " << pair.first << "\n";
+			std::cout << "Targets: " << "\n";
+			for (const auto& target : pair.second.AvailableTargets)
+			{
+				std::cout << target << "\n";
+			}
+			std::cout << "\n";
+		}
+	}
+private:
+	//there could be a better way of storing this, but for now this is how we will do it.
+	std::unordered_map<std::string, HttpTarget> connections;
 };
 
 class NetworkSystem
