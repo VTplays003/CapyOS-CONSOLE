@@ -102,11 +102,12 @@ public:
 				{
 					int regs[4] = {0};
 					__cpuid(regs, 0);
-					char vendor[13];	
-					std::memcpy(vendor + 0, &regs[1], 4); 
-					std::memcpy(vendor + 4, &regs[3], 4); 
-					std::memcpy(vendor + 8, &regs[2], 4); 
-					std::cout << "CPU Vendor: " << vendor << "\n"; 
+					std::array<char, 13> vendor;	
+					std::memcpy(vendor.data() + 0, &regs[1], 4); 
+					std::memcpy(vendor.data() + 4, &regs[3], 4); 
+					std::memcpy(vendor.data() + 8, &regs[2], 4); 
+					vendor[12] = '\0';
+					std::cout << "CPU Vendor: " << vendor.data() << "\n"; 
 					char brand[49] = { 0 };
 					for (unsigned int i = 0; i < 3; ++i) {
 						__cpuid(regs, 0x80000002 + i);
@@ -167,11 +168,12 @@ public:
 					std::cout << "Availible RAM: " << statex.ullAvailPhys / (1024 * 1024) << " MB" << "\n";
 					int regs[4] = { 0 };
 					__cpuid(regs, 0);
-					char vendor[13];
-					std::memcpy(vendor + 0, &regs[1], 4);
-					std::memcpy(vendor + 4, &regs[3], 4);
-					std::memcpy(vendor + 8, &regs[2], 4);
-					std::cout << "CPU Vendor: " << vendor << "\n";
+					std::array<char, 13> vendor;
+					std::memcpy(vendor.data() + 0, &regs[1], 4);
+					std::memcpy(vendor.data() + 4, &regs[3], 4);
+					std::memcpy(vendor.data() + 8, &regs[2], 4);
+					vendor[12] = '\0';
+					std::cout << "CPU Vendor: " << vendor.data() << "\n";
 					char brand[49] = { 0 };
 					for (unsigned int i = 0; i < 3; ++i) {
 						__cpuid(regs, 0x80000002 + i);
