@@ -25,7 +25,7 @@ clone the repo and run it yourself.
 
 Releases come every v# or v_.# update or something
 # Notes
-This is my personal project, so I will be the only one working on it. I will be using this as a way to learn C++ and other programming languages.
+This is my personal project, but contributions are accepted. I will be using this as a way to learn C++ and other programming languages.
 
 Also, there will be some 'unserious' commit messages, don't take them too seriously.
 
