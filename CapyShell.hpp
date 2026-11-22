@@ -175,7 +175,8 @@ public:
 					vendor[12] = '\0';
 					std::cout << "CPU Vendor: " << vendor.data() << "\n";
 					char brand[49] = { 0 };
-					for (unsigned int i = 0; i < 3; ++i) {
+					for (unsigned int i = 0; i < 3; ++i) 
+					{
 						__cpuid(regs, 0x80000002 + i);
 						std::memcpy(brand + (i * 16), regs, sizeof(regs));
 					}
@@ -186,15 +187,17 @@ public:
 						bufferSize / sizeof(SYSTEM_LOGICAL_PROCESSOR_INFORMATION)
 					);
 
-					if (!GetLogicalProcessorInformation(buffer.data(), &bufferSize)) {
-						std::cerr << "Failed to query processor topology.\n";
-						return;
+					if (!GetLogicalProcessorInformation(buffer.data(), &bufferSize)) 
+					{
+						std::cerr << "Failed to query processor topology." << "\n";
 					}
 					int physical_cores = 0;
 					int logical_processors = 0;
 					DWORD l1_cache = 0, l2_cache = 0, l3_cache = 0;
-					for (const auto& info : buffer) {
-						if (info.Relationship == RelationProcessorCore) {
+					for (const auto& info : buffer) 
+					{
+						if (info.Relationship == RelationProcessorCore) 
+						{
 							physical_cores++;
 							// Count set bits in ProcessorMask to get logical threads for this core
 							ULONG_PTR mask = info.ProcessorMask;
@@ -203,7 +206,8 @@ public:
 								mask >>= 1;
 							}
 						}
-						else if (info.Relationship == RelationCache) {
+						else if (info.Relationship == RelationCache)
+						{
 							if (info.Cache.Level == 1) l1_cache += info.Cache.Size;
 							else if (info.Cache.Level == 2) l2_cache += info.Cache.Size;
 							else if (info.Cache.Level == 3) l3_cache += info.Cache.Size;
@@ -235,7 +239,7 @@ public:
 	{
 		int waitTime = 50;
 		std::cout << "Loading CapyShell.hpp..." << "\n";
-		for (int i = 0; i < 244; i++)
+		for (int i = 0; i < 251; i++)
 		{
 			std::cout << "Loading line:" << i << "\n";
 		}

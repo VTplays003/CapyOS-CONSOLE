@@ -323,6 +323,7 @@ public:
 			saveFile << item.description << "\n";
 			saveFile << item.quantity << "\n";
 		}
+		saveFile << "End Inventory" << "\n";
 		saveFile.close();
 	}
 	void LoadGame(Player& playerObj, PlayerProgression& progressionObj, std::vector<Item>& inventoryObj, const std::unordered_map<std::string, Item>& itemDatabase)
@@ -362,21 +363,24 @@ public:
 			}
 			else if (saveText.find("Inventory:") == 0)
 			{
-				for (int i = 0; i < 3; i++)
+				while (std::getline(loadFile, saveText) && saveText != "End Inventory")
 				{
-					Item importedItem;
-					std::getline(loadFile, importedItem.name);
-					std::getline(loadFile, importedItem.description);
-					std::string quantityStr;
-					std::getline(loadFile, quantityStr);
-					importedItem.quantity = std::stoi(quantityStr);
-					auto it = itemDatabase.find(importedItem.name);
-					if (it != itemDatabase.end())
+					if (itemDatabase.find(saveText) != itemDatabase.end())
 					{
-						importedItem.type = it->second.type;
-						importedItem.stats = it->second.stats;
+						Item importedItem;
+						std::string quantityStr;
+						std::getline(loadFile, importedItem.name);
+						std::getline(loadFile, importedItem.description);
+						std::getline(loadFile, quantityStr);
+						importedItem.quantity = std::stoi(quantityStr);
+						auto it = itemDatabase.find(importedItem.name);
+						if (it != itemDatabase.end())
+						{
+							importedItem.type = it->second.type;
+							importedItem.stats = it->second.stats;
+						}
+						inventoryObj.push_back(importedItem);
 					}
-					inventoryObj.push_back(importedItem);
 				}
 			}
 		}
@@ -407,6 +411,7 @@ public:
 
 	void startCombat(Player& playerObj)
 	{
+		int turns = 1;
 		if (!(currentEnemy == nullptr))
 		{
 			inCombat = true;
@@ -418,12 +423,27 @@ public:
 			return;
 		}
 		std::cout << "A battle has started between " << playerObj.name << " and " << currentEnemy->name << "\n";
+		std::cout << "Turn: " << turns << "\n";
 		while (inCombat)
 		{
 			std::cout << "It is now your turn." << "\n";
 			playerTurn(playerObj);
 			enemyTurn(playerObj);
-			CombatTick(playerObj);
+			int result = CombatTick(playerObj);
+			if (result == -1)
+			{
+				++turns;
+			}
+			else if (result == 0)
+			{
+				std::cout << "You have been defeated." << "\n";
+				break;
+			}
+			else if (result == 1)
+			{
+				std::cout << "You have defeated the enemy." << "\n";
+				break;
+			}
 		}
 		return;
 	}
@@ -523,40 +543,45 @@ public:
 	}
 	int CombatTick(Player& playerObj)
 	{
-		while (inCombat)
+		if (playerObj.health <= 0)
 		{
-			playerTurn(playerObj);
-			enemyTurn(playerObj);
-			if (playerObj.health <= 0)
-			{
-				std::cout << "Combat has ended.";
-				std::cout << "You fainted and had to be taken to your respawn point" << "\n";
-				inCombat = false;
-				return 1;
-			}
-			else if (currentEnemy->health <= 0)
-			{
-				std::cout << "Combat has ended." << "\n";
-				std::cout << "The enemy falls in defeat and you get some stuff." << "\n";
-				inCombat = false;
-				currentEnemy = nullptr;
-				return 0;
-			}
-			if (playerObj.guarded)
-			{
-				playerObj.defense -= 1;
-				playerObj.guarded = false;
-			}
-			if (currentEnemy->guarded == true && currentEnemy->guardedTurns >= 1)
-			{
-				currentEnemy->defense -= 1;
-				currentEnemy->guarded = false;
-				currentEnemy->guardedTurns = 0;
-			}
-			else if (currentEnemy->guarded == true && currentEnemy->guardedTurns < 1)
-			{
-				currentEnemy->guardedTurns++;
-			}
+			std::cout << "Combat has ended.";
+			std::cout << "You fainted and had to be taken to your respawn point" << "\n";
+			inCombat = false;
+		}
+		else if (currentEnemy->health <= 0)
+		{
+			std::cout << "Combat has ended." << "\n";
+			std::cout << "The enemy falls in defeat and you get some stuff." << "\n";
+			inCombat = false;
+			currentEnemy = nullptr;
+		}
+		if (playerObj.guarded)
+		{
+			playerObj.defense -= 1;
+			playerObj.guarded = false;
+		}
+		if (currentEnemy->guarded == true && currentEnemy->guardedTurns >= 1)
+		{
+			currentEnemy->defense -= 1;
+			currentEnemy->guarded = false;
+			currentEnemy->guardedTurns = 0;
+		}
+		else if (currentEnemy->guarded == true && currentEnemy->guardedTurns < 1)
+		{
+			currentEnemy->guardedTurns++;
+		}
+		if (playerObj.health <= 0 && !inCombat)
+		{
+			return 0;
+		}
+		else if (currentEnemy->health <= 0 && !inCombat)
+		{
+			return 1;
+		}
+		else
+		{
+			return -1;
 		}
 	}
 	std::pair<boost::multiprecision::cpp_dec_float_50, int> JiraTests(Player& playerObj)
