@@ -36,7 +36,18 @@ static void CapyManager()
 		return;
 	}
 	interactionManager.SetupConnectionWTools();
-	interactionManager.DisplayConnections();
+	std::cout << "You are now entering the Network Terminal" << "\n";
+	while (true)
+	{
+		auto [host, target] = interactionManager.GetUserConnectionInput();
+		networkManager.ConnectToTool({host, target});
+		bool toExit = networkManager.exitTerminal();
+		if (toExit)
+		{
+			break;
+		}
+	}
+	std::cout << "Returning..." << "\n";
 }
 //Fixing bugs...
 static void CPPLingo()
@@ -303,8 +314,8 @@ static void TaskApp()
 		std::string title;
 		std::string description;
 		std::chrono::system_clock::time_point date;
-		int priority;
-		bool completed;
+		int priority = 0;
+		bool completed = false;
 	};
 	std::vector<Task> tasks;
 	std::cout << "Welcome to the Task App!" << "\n";
@@ -312,7 +323,6 @@ static void TaskApp()
 	{
 		int waitTime = 30;
 		std::string taskChoice;
-		int taskSelection = 0;
 		if (tasks.empty())
 		{
 			tasks.push_back({ "Default Task", "This is the task that shows when you first open the app", std::chrono::system_clock::now(), 1, false });
@@ -365,11 +375,11 @@ static void TaskApp()
 			std::getline(std::cin, newDescription);
 			std::cout << "Insert priority number (ONLY NUMBERS): ";
 			std::getline(std::cin, priorityLevel);
-			int priorityNumber = 1;
 			std::size_t pos = 0;
 			try
 			{
 				//pre check if the entire string conists of numbers only
+				int priorityNumber = 1;
 				priorityNumber = std::stoi(priorityLevel, &pos);
 				if (pos != priorityLevel.length())
 				{
@@ -449,9 +459,9 @@ static void TaskApp()
 		else if (taskChoice == "4" || taskChoice == "Log out")
 		{
 			break;
-			return;
 		}
-		else {
+		else 
+		{
 			std::cout << "Invalid choice selected. Restarting app..." << "\n";
 		}
 	}
@@ -559,7 +569,7 @@ int main()
 	{
 	case 1:
 		std::cin.ignore();
-		CapyManager();
+		CapyShell();
 		return 1;
 	default:
 		std::cin.ignore();

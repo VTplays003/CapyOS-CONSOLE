@@ -13,6 +13,8 @@
 #include <string>
 #include <cstdlib>
 #include <chrono>
+#include <vector>
+#include <stdexcept>
 
 namespace beast = boost::beast;   
 namespace http = beast::http;     
@@ -64,12 +66,38 @@ public:
 	}
 	std::pair<std::string, std::string> GetUserConnectionInput()
 	{
-		std::string host, port;
+		std::string host, target;
+		std::cout << "Availible hosts: ";
+		for (const auto& pair : connections)
+		{
+			std::cout << pair.first << "\n";
+		}
 		std::cout << "Enter host: ";
 		std::getline(std::cin, host);
-		std::cout << "Enter port: ";
-		std::getline(std::cin, port);
-		return std::make_pair(host, port);
+		if (connections.find(host) == connections.end())
+		{
+			std::cout << "Host not found. Please check your input." << "\n";
+			return std::make_pair("", "");
+		}
+		std::cout << "Availible targets for " << host << ": ";
+		for (const auto& available_target : connections.at(host).AvailableTargets)
+		{
+			std::cout << available_target << "\n";
+		}
+		std::cout << "Enter target for " << host << ": ";
+		std::getline(std::cin, target);
+		std::cout << "You have selected host: " << host << " and target: " << target << "\n";
+		if (host.empty() || target.empty())
+		{
+			std::cout << "Host or target is empty. Please check your input." << "\n";
+			return std::make_pair("", "");
+		}
+		else if (std::find(connections.at(host).AvailableTargets.begin(), connections.at(host).AvailableTargets.end(), target) == connections.at(host).AvailableTargets.end())
+		{
+			std::cout << "Target not found for the selected host. Please check your input." << "\n";
+			return std::make_pair("", "");
+		}
+		return std::make_pair(host, target);
 	}
 	void DisplayConnections()
 	{
@@ -93,7 +121,74 @@ private:
 class NetworkSystem
 {
 public:
-	bool TestConnection()
+	static void ConnectToTool(const std::pair<std::string, std::string>& connection)
+	{
+		if (connection == std::make_pair("", ""))
+		{
+			std::cout << "Invalid connection. Please check your input." << "\n";
+			return;
+		}
+		try 
+		{
+			const std::string& host = connection.first;
+			const std::string& target = connection.second;
+			const std::string port = "443"; // Default HTTPS port
+			net::io_context ioc;
+			ssl::context ctx(ssl::context::tls_client);
+
+			ctx.set_options(
+				ssl::context::default_workarounds |
+				ssl::context::no_sslv2 |
+				ssl::context::single_dh_use);
+
+			beast::error_code ec;
+			ctx.set_default_verify_paths(ec);
+			ctx.load_verify_file("cacert.pem", ec);
+			if (ec)
+			{
+				std::cerr << "Warning: Could not load default verify paths: " << ec.message() << std::endl;
+				return;
+			}
+			ctx.set_verify_mode(ssl::verify_peer);
+
+			tcp::resolver resolver(ioc);
+			ssl::stream<beast::tcp_stream> stream(ioc, ctx);
+			//verify hostname
+			stream.set_verify_callback(ssl::host_name_verification(host));
+
+			if (!SSL_set_tlsext_host_name(stream.native_handle(), host.c_str()))
+			{
+				beast::error_code ec{ static_cast<int>(::ERR_get_error()), net::error::get_ssl_category() };
+				throw beast::system_error{ ec };
+			}
+
+			beast::flat_buffer buffer;
+			http::response<http::string_body> res;
+			auto endpoints = resolver.resolve(host, port);
+			net::connect(stream.lowest_layer(), endpoints);
+
+			stream.handshake(ssl::stream_base::client);
+
+			http::request<http::string_body> req{ http::verb::get, target, 11 };
+			req.set(http::field::host, host);
+			req.set(http::field::user_agent, "CapyOS/0.2");
+			req.set(http::field::accept, "application/json");
+			http::write(stream, req);
+			http::read(stream, buffer, res);
+			std::cout << "Response: " << res << std::endl;
+			json::value data = json::parse(res.body());
+
+			beast::error_code close_ec;
+			stream.shutdown(close_ec);
+		}
+		catch (const std::exception& e)
+		{
+			std::cerr << "Error: " << e.what() << std::endl;
+		}
+		
+
+	}
+	static bool TestConnection()
 	{
 		try
 		{
@@ -135,14 +230,12 @@ public:
 
 			beast::flat_buffer buffer;
 			http::response<http::string_body> res;
-
 			//resolve and connect to the server
 			auto endpoints = resolver.resolve(host, port);
 			net::connect(stream.lowest_layer(), endpoints);
 
 			//perform SSL handshake
 			stream.handshake(ssl::stream_base::client);
-
 
 			//request
 			http::request<http::string_body> req{ http::verb::get, target, 11 };
@@ -152,7 +245,6 @@ public:
 			http::write(stream, req);
 			http::read(stream, buffer, res);
 			std::cout << "Response: " << res << std::endl;
-
 			json::value data = json::parse(res.body());
 			std::cout << "Network connection test successful!" << std::endl;
 
@@ -170,6 +262,31 @@ public:
 		}
 
 	}
+	static bool exitTerminal()
+	{
+		std::string userInput;
+		std::cout << "Are you sure you want to exit the Network Terminal? (y/n): " << "\n";
+		std::getline(std::cin, userInput);
+		if (userInput == "y" || userInput == "Y")
+		{
+			std::cout << "Exiting Network Terminal..." << "\n";
+			return true;
+		}
+		else if (userInput == "n" || userInput == "N")
+		{
+			std::cout << "Continuing in Network Terminal..." << "\n";
+			return false;
+		}
+		else
+		{
+			std::cout << "Invalid input. Please enter 'y' or 'n'." << "\n";
+			return exitTerminal(); // Recursively ask again
+		}
+	}
 
 private:
+};
+class AuthorizationSystem 
+{
+
 };

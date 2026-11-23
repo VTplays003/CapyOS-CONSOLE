@@ -12,7 +12,7 @@ class Parser
 {
 public:
 	std::string command;
-	void parseCommand(std::string& command)
+	static void parseCommand(std::string& command)
 	{
 		while (true)
 		{
@@ -235,9 +235,8 @@ public:
 		}
 		return;
 	}
-	void initTerminal()
+	static void initTerminal()
 	{
-		int waitTime = 50;
 		std::cout << "Loading CapyShell.hpp..." << "\n";
 		for (int i = 0; i < 251; i++)
 		{

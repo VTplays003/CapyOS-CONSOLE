@@ -23,6 +23,8 @@ try to help with (this will be updated):
 I am on Windows 11, using the MSVC compiler which means, if you do not have the MSVC compiler with Windows headers, your own compiler might do some janky stuff (produce errors) when you try to 
 clone the repo and run it yourself. 
 
+As of 11/23/26 I use Cppcheck to analyze my code.
+
 Releases come every v# or v_.# update or something
 # Notes
 This is my personal project, but contributions are accepted. I will be using this as a way to learn C++ and other programming languages.

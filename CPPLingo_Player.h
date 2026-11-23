@@ -88,7 +88,7 @@ public:
 			break;
 		}
 	}
-	std::string RaceToString(const Player& player)
+	static std::string RaceToString(const Player& player)
 	{
 		switch (player.race)
 		{
@@ -112,7 +112,7 @@ public:
 				break;
 		}
 	}	
-	std::string GenderToString(const Player& player)
+	static std::string GenderToString(const Player& player)
 	{
 		switch (player.gender)
 		{
@@ -177,7 +177,7 @@ class Inventory
 				std::cout << "Item not found in database." << "\n";
 			}
 		}
-		void useItem(Item item)
+		static void useItem(Item item)
 		{
 			//also placehold
 		}
@@ -301,7 +301,7 @@ class SaveSystem
 {
 public:
 	std::string loadCharacter;
-	void SaveGame(const Player& playerObj, const PlayerProgression& progressionObj, const std::vector<Item>& inventoryObj)
+	static void SaveGame(const Player& playerObj, const PlayerProgression& progressionObj, const std::vector<Item>& inventoryObj)
 	{
 		std::ofstream saveFile("savefile.txt");
 		if (!saveFile)
@@ -326,7 +326,7 @@ public:
 		saveFile << "End Inventory" << "\n";
 		saveFile.close();
 	}
-	void LoadGame(Player& playerObj, PlayerProgression& progressionObj, std::vector<Item>& inventoryObj, const std::unordered_map<std::string, Item>& itemDatabase)
+	static void LoadGame(Player& playerObj, PlayerProgression& progressionObj, std::vector<Item>& inventoryObj, const std::unordered_map<std::string, Item>& itemDatabase)
 	{
 		std::string saveText;
 		std::ifstream loadFile("savefile.txt");
@@ -337,31 +337,31 @@ public:
 		}
 		while (std::getline(loadFile, saveText))
 		{
-			if (saveText.find("Name:") == 0)
+			if (saveText.starts_with("Name:") == 0)
 			{
 				playerObj.name = saveText.substr(6);
 			}
-			else if (saveText.find("Race:") == 0)
+			else if (saveText.starts_with("Race:") == 0)
 			{
 				playerObj.race = static_cast<Race>(std::stoi(saveText.substr(6)));
 			}
-			else if (saveText.find("Gender:") == 0)
+			else if (saveText.starts_with("Gender:") == 0)
 			{
 				playerObj.gender = static_cast<Gender>(std::stoi(saveText.substr(8)));
 			}
-			else if (saveText.find("Prologue - Act 1, Puzzle 1:") == 0)
+			else if (saveText.starts_with("Prologue - Act 1, Puzzle 1:") == 0)
 			{
 				progressionObj.prologue1_1 = static_cast<bool>(std::stoi(saveText.substr(28)));
 			}
-			else if (saveText.find("Has Guild Card:") == 0)
+			else if (saveText.starts_with("Has Guild Card:") == 0)
 			{
 				playerObj.hasGuildCard = static_cast<bool>(std::stoi(saveText.substr(16)));
 			}
-			else if (saveText.find("Prologue - Act 1, Puzzle 2:") == 0)
+			else if (saveText.starts_with("Prologue - Act 1, Puzzle 2:") == 0)
 			{
 				progressionObj.prologue1_2 = static_cast<bool>(std::stoi(saveText.substr(28)));
 			}
-			else if (saveText.find("Inventory:") == 0)
+			else if (saveText.starts_with("Inventory:") == 0)
 			{
 				while (std::getline(loadFile, saveText) && saveText != "End Inventory")
 				{
@@ -624,17 +624,17 @@ public:
 		classesAvailible[2001] = { "Beginner C++ Class", "A class for beginners to learn basic C++ programming. Teaches you all the way until page 10 of the manual.", 1, 2001};
 	}
 
-	std::map<int, AcademyClass> AccessClasses()
+	const std::map<int, AcademyClass>& AccessClasses()
 	{
 		return classesAvailible;
 	}
 
-	std::vector<AcademyClass> AccessEnrolled()
+	const std::vector<AcademyClass>& AccessEnrolled()
 	{
 		return classesEnrolled;
 	}
 
-	void addClass(const std::map<int, AcademyClass>& classList, Player& playerObj)
+	void addClass(const std::map<int, AcademyClass>& classList, const Player& playerObj)
 	{
 		bool addClass = true;
 		while (addClass)
@@ -649,7 +649,6 @@ public:
 			std::getline(std::cin, addedClass);
 			if (addedClass == "quit" || addedClass == "q")
 			{
-				addClass = false;
 				break;
 			}
 			int classID = std::stoi(addedClass);
@@ -701,7 +700,7 @@ private:
 class StorySystem 
 {
 public:
-	void StartClient()
+	static void StartClient()
 	{
 		std::cout << "Starting Client..." << "\n";
 		std::cout << "Client started!" << "\n"; 
