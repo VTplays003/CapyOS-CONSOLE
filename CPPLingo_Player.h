@@ -337,31 +337,31 @@ public:
 		}
 		while (std::getline(loadFile, saveText))
 		{
-			if (saveText.starts_with("Name:") == 0)
+			if (saveText.starts_with("Name:"))
 			{
 				playerObj.name = saveText.substr(6);
 			}
-			else if (saveText.starts_with("Race:") == 0)
+			else if (saveText.starts_with("Race:"))
 			{
 				playerObj.race = static_cast<Race>(std::stoi(saveText.substr(6)));
 			}
-			else if (saveText.starts_with("Gender:") == 0)
+			else if (saveText.starts_with("Gender:"))
 			{
 				playerObj.gender = static_cast<Gender>(std::stoi(saveText.substr(8)));
 			}
-			else if (saveText.starts_with("Prologue - Act 1, Puzzle 1:") == 0)
+			else if (saveText.starts_with("Prologue - Act 1, Puzzle 1:"))
 			{
 				progressionObj.prologue1_1 = static_cast<bool>(std::stoi(saveText.substr(28)));
 			}
-			else if (saveText.starts_with("Has Guild Card:") == 0)
+			else if (saveText.starts_with("Has Guild Card:"))
 			{
 				playerObj.hasGuildCard = static_cast<bool>(std::stoi(saveText.substr(16)));
 			}
-			else if (saveText.starts_with("Prologue - Act 1, Puzzle 2:") == 0)
+			else if (saveText.starts_with("Prologue - Act 1, Puzzle 2:"))
 			{
 				progressionObj.prologue1_2 = static_cast<bool>(std::stoi(saveText.substr(28)));
 			}
-			else if (saveText.starts_with("Inventory:") == 0)
+			else if (saveText.starts_with("Inventory:"))
 			{
 				while (std::getline(loadFile, saveText) && saveText != "End Inventory")
 				{
@@ -543,19 +543,6 @@ public:
 	}
 	int CombatTick(Player& playerObj)
 	{
-		if (playerObj.health <= 0)
-		{
-			std::cout << "Combat has ended.";
-			std::cout << "You fainted and had to be taken to your respawn point" << "\n";
-			inCombat = false;
-		}
-		else if (currentEnemy->health <= 0)
-		{
-			std::cout << "Combat has ended." << "\n";
-			std::cout << "The enemy falls in defeat and you get some stuff." << "\n";
-			inCombat = false;
-			currentEnemy = nullptr;
-		}
 		if (playerObj.guarded)
 		{
 			playerObj.defense -= 1;
@@ -570,6 +557,19 @@ public:
 		else if (currentEnemy->guarded == true && currentEnemy->guardedTurns < 1)
 		{
 			currentEnemy->guardedTurns++;
+		}
+		if (playerObj.health <= 0)
+		{
+			std::cout << "Combat has ended.";
+			std::cout << "You fainted and had to be taken to your respawn point" << "\n";
+			inCombat = false;
+		}
+		else if (currentEnemy->health <= 0)
+		{
+			std::cout << "Combat has ended." << "\n";
+			std::cout << "The enemy falls in defeat and you get some stuff." << "\n";
+			inCombat = false;
+			currentEnemy = nullptr;
 		}
 		if (playerObj.health <= 0 && !inCombat)
 		{

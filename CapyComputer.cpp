@@ -19,6 +19,7 @@
 #include <memory>
 #include <cassert>
 #include <iomanip>
+#include <limits>
 #include "CPPLingo_Player.h"
 #include "CapyManager.h"
 #include "CapyShell.hpp"
@@ -562,17 +563,26 @@ int main()
 	SetConsoleOutputCP(CP_UTF8);
 	std::cout << "Override command input (numbers only), don't put anything here if you want the default functionality." << "\n";
 	std::cin >> overrideCommand;
+	//reset cin if char/string input is detected
+	if (!std::cin)
+	{
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		overrideCommand = 0;
+	}
+	else
+	{
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
 	std::cout << "Hello and welcome to the CapyComputer Installation Client!" << "\n";
 	std::cout << "This runs on Boost version " << BOOST_VERSION << " and also MVSC C++23 with Git for Windows installed." << "\n";
 	std::cout << "Redirecting to the CapyComputer Installation Client..." << "\n";
 	switch (overrideCommand)
 	{
 	case 1:
-		std::cin.ignore();
 		CapyShell();
 		return 1;
 	default:
-		std::cin.ignore();
 		installCapyComputer();
 		return 0;
 	}
