@@ -569,15 +569,16 @@ public:
 			std::cout << "Combat has ended." << "\n";
 			std::cout << "The enemy falls in defeat and you get some stuff." << "\n";
 			inCombat = false;
-			currentEnemy = nullptr;
 		}
 		if (playerObj.health <= 0 && !inCombat)
 		{
 			return 0;
+			currentEnemy = nullptr;
 		}
 		else if (currentEnemy->health <= 0 && !inCombat)
 		{
 			return 1;
+			currentEnemy = nullptr;
 		}
 		else
 		{
