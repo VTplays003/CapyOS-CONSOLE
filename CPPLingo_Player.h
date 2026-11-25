@@ -572,13 +572,13 @@ public:
 		}
 		if (playerObj.health <= 0 && !inCombat)
 		{
-			return 0;
 			currentEnemy = nullptr;
+			return 0;
 		}
 		else if (currentEnemy->health <= 0 && !inCombat)
 		{
-			return 1;
 			currentEnemy = nullptr;
+			return 1;
 		}
 		else
 		{
