@@ -11,7 +11,7 @@ CapyOS is a OS based off of capybaras (my favorite animal) and we have a ton of 
 # Roadmap
 Now, what I'm really focusing on is CapyManager, then the pile of bugs in C++ Lingo RPG along with CapyShell.
 
-For the actual roadmap, please see (https://app.diagrams.net/#G1UR1AckyvT_thRHsgvFmZpjU2YaB6Ucau#%7B"pageId"%3A"DxbGKBq6TSNygmuJOEYu"%7D)
+For the actual roadmap, please see ([https://app.diagrams.net/#G1UR1AckyvT_thRHsgvFmZpjU2YaB6Ucau#%7B"pageId"%3A"DxbGKBq6TSNygmuJOEYu"%7D](https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=CapyOS%20Roadmap.drawio&dark=auto#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1vn5KFBCU_F6EpHqAcdSiVoj0rO2zdjdE%26export%3Ddownload))
 
 # Stuff you CAN do to help
 Right now, I'm too busy with v0.2.8's CapyManager and figuring out how to configure the Authorization Manager, so here is the list of stuff you can
