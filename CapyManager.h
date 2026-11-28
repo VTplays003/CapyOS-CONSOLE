@@ -15,6 +15,9 @@
 #include <chrono>
 #include <vector>
 #include <stdexcept>
+#include <algorithm>
+#include <Windows.h>
+#include <wincred.h>
 
 namespace beast = boost::beast;   
 namespace http = beast::http;     
@@ -33,8 +36,8 @@ public:
 	};
 	void SetupConnectionWTools()
 	{
-		std::cout << "This is meant to be a productive tool used to interact with websites";
-		std::cout << " such as Jira, and Github. Please don't misuse it. (I wouldn't want a lawsuit on my hands)" << "\n"; 
+		std::cout << "Welcome to CapyManager, an app used to communicate with the internet through api calls and stuff." << "\n";
+		std::cout << "Disclaimer: Please don't use this for ACTUAL work like a job. As it might be insecure, and this is a more of a way learning how to make API calls." << "\n";
 		std::cout << "This tool is still in development, so please be patient with it." << "\n";
 		std::cout << "Here, you will be setting up availible connections for NetworkSystem to use." << "\n"; 
 		//i would add saving here but im lazy, ill program it later.
@@ -286,7 +289,60 @@ public:
 
 private:
 };
+//now this is complex hold on
 class AuthorizationSystem 
 {
-
+public:
+	enum class AuthType
+	{
+		None,
+		Basic,
+		Bearer,
+		ApiKey,
+		OAuth2,
+		Cookie,
+		Digest,
+		HMAC,
+		MutualTLS
+	};
+	bool TestCredential()
+	{
+		CREDENTIALW credential = {};
+		credential.Persist = CRED_PERSIST_LOCAL_MACHINE; //tells us "keep on computer"
+		credential.Type = CRED_TYPE_GENERIC;
+		wchar_t targetName[] = L"CapyOS/CapyManager/CredTest";
+		credential.TargetName = targetName;
+		//avoiding the "i change this now good luck" reinterpret cast
+		std::vector<BYTE> testSecret = { 'l', 'o', 'l' };
+		credential.CredentialBlob = testSecret.data();
+		credential.CredentialBlobSize = static_cast<DWORD>(testSecret.size());
+		//doing this because im TESTING it
+		credential.UserName = nullptr;
+		bool storeSuccess = CredWriteW(&credential, 0);
+		if (storeSuccess)
+		{
+			std::cout << "Credential Write Test: Success" << "\n";
+		}
+		else
+		{
+			std::cout << "Credential Write Test: Failure" << "\n";
+			std::cout << "Caused by: " << GetLastError() << "\n";
+			return false;
+		}
+		PCREDENTIAL readCred = nullptr;
+		bool ReadSuccess = CredReadW(targetName, CRED_TYPE_GENERIC, 0, &readCred);
+		if (ReadSuccess && (std::equal(testSecret.begin(), testSecret.end(), readCred->CredentialBlob) && readCred->CredentialBlobSize == static_cast<DWORD>(testSecret.size())))
+		{
+			std::cout << readCred->CredentialBlob << "\n";
+			std::cout << readCred->CredentialBlobSize << "\n";
+			std::cout << "Credential Read Test: Success";
+		}
+		else
+		{
+			std::cout << "Credential Read Test: Failure" << "\n";
+			return false;
+		}
+		CredFree(readCred);
+		return true;
+	}
 };

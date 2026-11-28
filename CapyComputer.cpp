@@ -30,10 +30,17 @@ static void CapyManager()
 {
 	InteractionSystem interactionManager;
 	NetworkSystem networkManager;
+	AuthorizationSystem authSystem;
 	bool networkConnectionSuccessful = networkManager.TestConnection();
 	if (!networkConnectionSuccessful)
 	{
 		std::cout << "Check your internet settings and try again." << "\n";
+		return;
+	}
+	bool authorizationSuccessful = authSystem.TestCredential();
+	if (!authorizationSuccessful)
+	{
+		std::cout << "There is something wrong accessing the credential system" << "\n";
 		return;
 	}
 	interactionManager.SetupConnectionWTools();
@@ -580,7 +587,7 @@ int main()
 	switch (overrideCommand)
 	{
 	case 1:
-		CapyShell();
+		CapyManager();
 		return 1;
 	default:
 		installCapyComputer();
